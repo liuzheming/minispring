@@ -12,7 +12,7 @@ import org.junit.Test;
  * 测试用例 v0.1
  * 针对给定XML，能够获取相应的BeanDefinition和BeanInstance
  */
-public class BeanFatoryTest {
+public class BeanFactoryTest {
 
 
     /**
