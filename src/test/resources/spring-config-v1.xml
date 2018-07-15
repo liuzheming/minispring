@@ -7,8 +7,7 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-
-
+    <bean id="petStore" class="mini.spring.test.v1.PetStore"/>
 
 </beans>
 

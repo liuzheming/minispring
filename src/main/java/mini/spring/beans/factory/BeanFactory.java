@@ -1,6 +1,6 @@
 package mini.spring.beans.factory;
 
-import java.io.InputStream;
+import mini.spring.beans.BeanDefinition;
 
 public interface BeanFactory {
 

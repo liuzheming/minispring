@@ -1,4 +1,4 @@
-package mini.spring.beans.factory;
+package mini.spring.beans;
 
 public interface BeanDefinition {
 
