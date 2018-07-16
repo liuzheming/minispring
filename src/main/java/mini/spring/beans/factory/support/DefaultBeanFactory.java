@@ -31,8 +31,17 @@ public class DefaultBeanFactory implements BeanFactory {
     }
 
     @Override
-    public Object getBean(String beanName) {
-        return null;
+    public Object getBean(String beanId) {
+        BeanDefinition bd = beanDefMap.get(beanId);
+        if (bd == null) return null;
+        Object bean = null;
+        try {
+            Class clazz = Class.forName(bd.getBeanClassName());
+            bean = clazz.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bean;
     }
 
 

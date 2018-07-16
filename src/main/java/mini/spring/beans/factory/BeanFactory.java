@@ -5,8 +5,8 @@ import mini.spring.beans.BeanDefinition;
 public interface BeanFactory {
 
 
-    BeanDefinition getBeanDefinition(String beanName);
+    BeanDefinition getBeanDefinition(String beanId);
 
-    Object getBean(String beanName);
+    Object getBean(String beanId);
 
 }

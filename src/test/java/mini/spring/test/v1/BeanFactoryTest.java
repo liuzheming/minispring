@@ -21,17 +21,14 @@ public class BeanFactoryTest {
      */
     @Test
     public void testGetBean() {
-
         BeanFactory bf = new DefaultBeanFactory("spring-config-v1.xml");
         BeanDefinition bd = bf.getBeanDefinition("petStore");
-
         assertEquals(bd.getBeanClassName(), "mini.spring.test.v1.PetStore");
-
         PetStore petStore = (PetStore) bf.getBean("petStore");
-
-//        assertNotNull(petStore);
-
+        assertNotNull(petStore);
     }
+
+
 
 
 
