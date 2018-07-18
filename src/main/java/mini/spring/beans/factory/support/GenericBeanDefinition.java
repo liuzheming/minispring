@@ -29,7 +29,7 @@ public class GenericBeanDefinition implements BeanDefinition {
 
     @Override
     public boolean isSingleton() {
-        return "singleton".equalsIgnoreCase(scope);
+        return SINGLETON.equalsIgnoreCase(scope);
     }
 
 

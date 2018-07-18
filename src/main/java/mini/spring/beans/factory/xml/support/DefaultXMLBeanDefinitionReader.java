@@ -5,12 +5,12 @@ import mini.spring.beans.factory.BeanFactory;
 import mini.spring.beans.factory.support.BeanDefinitionRegistry;
 import mini.spring.beans.factory.support.GenericBeanDefinition;
 import mini.spring.beans.factory.xml.XMLBeanDefinitionReader;
-import mini.spring.utils.ClassUtils;
+import mini.spring.core.io.Resource;
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 
@@ -28,17 +28,13 @@ public class DefaultXMLBeanDefinitionReader implements XMLBeanDefinitionReader {
     }
 
     @Override
-    public void loadBeanDefinition(String configFile) {
-        InputStream is;
-
+    public void loadBeanDefinition(Resource resource) {
+        InputStream is = null;
         try {
-            ClassLoader cl = ClassUtils.getDefaultClassLoader();
-            is = cl.getResourceAsStream(configFile);
+            is = resource.getInputStream();
             SAXReader reader = new SAXReader();
             Document doc = reader.read(is);
-
             Iterator<Element> ite = doc.getRootElement().elementIterator();
-
             while (ite.hasNext()) {
                 Element ele = ite.next();
                 String id = ele.attributeValue(ID_ATTRIBUTE);
@@ -46,9 +42,16 @@ public class DefaultXMLBeanDefinitionReader implements XMLBeanDefinitionReader {
                 String scope = ele.attributeValue(SCOPE);
                 registerBeanDefinition(new GenericBeanDefinition(id, beanClassName, scope));
             }
-
-        } catch (DocumentException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
