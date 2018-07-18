@@ -4,5 +4,7 @@ public interface BeanDefinition {
 
     String getBeanClassName();
 
+    String getId();
+
 
 }

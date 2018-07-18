@@ -16,13 +16,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
 
 
-    private static final String ID_ATTRIBUTE = "id";
-    private static final String CLASS_ATTRIBUTE = "class";
-
     private final Map<String, BeanDefinition> beanDefMap = new ConcurrentHashMap<>();
 
-    public DefaultBeanFactory(String path) {
-        loadBeanDefinition(path);
+    public DefaultBeanFactory() {
     }
 
     @Override
@@ -45,37 +41,13 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
     }
 
 
-    private void loadBeanDefinition(String configFile) {
-        InputStream is;
-
-        try {
-            ClassLoader cl = ClassUtils.getDefaultClassLoader();
-            is = cl.getResourceAsStream(configFile);
-            SAXReader reader = new SAXReader();
-            Document doc = reader.read(is);
-
-            Iterator<Element> ite = doc.getRootElement().elementIterator();
-
-            while (ite.hasNext()) {
-                Element ele = ite.next();
-                String id = ele.attributeValue(ID_ATTRIBUTE);
-                String beanClassName = ele.attributeValue(CLASS_ATTRIBUTE);
-                beanDefMap.put(id, new GenericBeanDefinition(id, beanClassName));
-            }
-
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        }
-    }
-
-
 //    @Override
 //    public BeanDefinition getBeanDefinition(String beanId) {
 //        return null;
 //    }
 
     @Override
-    public void registerBeanDefinition() {
-
+    public void registerBeanDefinition(BeanDefinition beanDef) {
+        this.beanDefMap.put(beanDef.getId(), beanDef);
     }
 }

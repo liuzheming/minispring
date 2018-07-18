@@ -9,4 +9,10 @@ public class DefaultBeanDefinition implements BeanDefinition {
         return null;
     }
 
+    @Override
+    public String getId() {
+        return null;
+    }
+
+
 }
