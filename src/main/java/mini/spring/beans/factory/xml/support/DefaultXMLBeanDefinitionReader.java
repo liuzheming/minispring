@@ -21,6 +21,7 @@ public class DefaultXMLBeanDefinitionReader implements XMLBeanDefinitionReader {
 
     private static final String ID_ATTRIBUTE = "id";
     private static final String CLASS_ATTRIBUTE = "class";
+    private static final String SCOPE = "scope";
 
     public DefaultXMLBeanDefinitionReader(BeanFactory beanDefRegistry) {
         this.beanDefRegistry = (BeanDefinitionRegistry) beanDefRegistry;
@@ -42,7 +43,8 @@ public class DefaultXMLBeanDefinitionReader implements XMLBeanDefinitionReader {
                 Element ele = ite.next();
                 String id = ele.attributeValue(ID_ATTRIBUTE);
                 String beanClassName = ele.attributeValue(CLASS_ATTRIBUTE);
-                registerBeanDefinition(new GenericBeanDefinition(id, beanClassName));
+                String scope = ele.attributeValue(SCOPE);
+                registerBeanDefinition(new GenericBeanDefinition(id, beanClassName, scope));
             }
 
         } catch (DocumentException e) {

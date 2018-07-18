@@ -17,6 +17,7 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
 
 
     private final Map<String, BeanDefinition> beanDefMap = new ConcurrentHashMap<>();
+    private final Map<String, Object> beanMap = new ConcurrentHashMap<>();
 
     public DefaultBeanFactory() {
     }
@@ -30,10 +31,14 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
     public Object getBean(String beanId) {
         BeanDefinition bd = beanDefMap.get(beanId);
         if (bd == null) return null;
+        if (bd.isSingleton() && beanMap.get(bd.getId()) != null) {
+            return beanMap.get(bd.getId());
+        }
         Object bean = null;
         try {
             Class clazz = Class.forName(bd.getBeanClassName());
             bean = clazz.newInstance();
+            beanMap.put(beanId, bean);
         } catch (Exception e) {
             e.printStackTrace();
         }

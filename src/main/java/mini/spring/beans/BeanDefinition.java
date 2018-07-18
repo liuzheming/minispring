@@ -6,5 +6,7 @@ public interface BeanDefinition {
 
     String getId();
 
+    boolean isSingleton();
+
 
 }

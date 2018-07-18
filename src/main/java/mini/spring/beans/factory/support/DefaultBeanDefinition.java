@@ -14,5 +14,8 @@ public class DefaultBeanDefinition implements BeanDefinition {
         return null;
     }
 
-
+    @Override
+    public boolean isSingleton() {
+        return false;
+    }
 }

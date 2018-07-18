@@ -8,9 +8,12 @@ public class GenericBeanDefinition implements BeanDefinition {
 
     private String beanClassName;
 
-    public GenericBeanDefinition(String id, String beanClassName) {
+    private String scope;
+
+    public GenericBeanDefinition(String id, String beanClassName, String scope) {
         this.id = id;
         this.beanClassName = beanClassName;
+        this.scope = scope;
     }
 
 
@@ -23,6 +26,12 @@ public class GenericBeanDefinition implements BeanDefinition {
     public String getId() {
         return id;
     }
+
+    @Override
+    public boolean isSingleton() {
+        return "singleton".equalsIgnoreCase(scope);
+    }
+
 
     public void setId(String id) {
         this.id = id;

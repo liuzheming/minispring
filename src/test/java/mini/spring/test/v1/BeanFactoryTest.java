@@ -17,6 +17,7 @@ import org.junit.Test;
  */
 public class BeanFactoryTest {
 
+
     /**
      * 测试获取Bean定义
      * 测试获取Bean实例
@@ -40,5 +41,15 @@ public class BeanFactoryTest {
         Assert.assertEquals("mini.spring.test.v1.PetStore", petStoreDef.getBeanClassName());
         PetStore petStore = (PetStore) bf.getBean("petStore");
         Assert.assertNotNull(petStore);
+    }
+
+    @Test
+    public void testGetSingleton() {
+        BeanFactory bf = new DefaultBeanFactory();
+        XMLBeanDefinitionReader xmlReader = new DefaultXMLBeanDefinitionReader(bf);
+        xmlReader.loadBeanDefinition("spring-config-v1.xml");
+        PetStore petStore = (PetStore) bf.getBean("petStore");
+        PetStore petStore2 = (PetStore) bf.getBean("petStore");
+        Assert.assertEquals(petStore, petStore2);
     }
 }
