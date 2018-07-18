@@ -13,7 +13,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class DefaultBeanFactory implements BeanFactory {
+public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
 
 
     private static final String ID_ATTRIBUTE = "id";
@@ -69,4 +69,13 @@ public class DefaultBeanFactory implements BeanFactory {
     }
 
 
+//    @Override
+//    public BeanDefinition getBeanDefinition(String beanId) {
+//        return null;
+//    }
+
+    @Override
+    public void registerBeanDefinition() {
+
+    }
 }
