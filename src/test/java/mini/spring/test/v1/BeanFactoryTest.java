@@ -8,6 +8,7 @@ import mini.spring.beans.factory.support.DefaultBeanFactory;
 import mini.spring.beans.factory.xml.XMLBeanDefinitionReader;
 import mini.spring.beans.factory.xml.support.DefaultXMLBeanDefinitionReader;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 
@@ -17,13 +18,24 @@ import org.junit.Test;
  */
 public class BeanFactoryTest {
 
+
+    private BeanFactory bf = null;
+
+    private XMLBeanDefinitionReader xmlReader = null;
+
+    @Before
+    public void setUP() {
+        bf = new DefaultBeanFactory();
+        xmlReader = new DefaultXMLBeanDefinitionReader(bf);
+    }
+
     /**
      * 测试获取Bean定义
      * 测试获取Bean实例
      */
     @Test
     public void testGetBean() {
-        /*  BeanFactory兼职搞xml加载的版本 */
+        /* BeanFactory兼职搞xml加载的版本 */
 //        BeanFactory bf = new DefaultBeanFactory("spring-config-v1.xml");
 //        BeanDefinition bd = bf.getBeanDefinition("petStore");
 //        assertEquals(bd.getBeanClassName(), "mini.spring.test.v1.PetStore");
@@ -32,13 +44,25 @@ public class BeanFactoryTest {
 
         /* 加载xml的功能从BeanFactory拆分出来的版本 */
 
-        BeanFactory bf = new DefaultBeanFactory();
         // 读取XML和注册BeanDefinition
-        XMLBeanDefinitionReader xmlReader = new DefaultXMLBeanDefinitionReader(bf);
         xmlReader.loadBeanDefinition("spring-config-v1.xml");
         BeanDefinition petStoreDef = ((BeanDefinitionRegistry) bf).getBeanDefinition("petStore");
         Assert.assertEquals("mini.spring.test.v1.PetStore", petStoreDef.getBeanClassName());
         PetStore petStore = (PetStore) bf.getBean("petStore");
         Assert.assertNotNull(petStore);
+//        PetStore petStore2 = (PetStore) bf.getBean("petStore");
+//        Assert.assertEquals(petStore, petStore2);
+
+    }
+
+    /**
+     * 测试获取单例
+     */
+    @Test
+    public void testGetSingleton() {
+        PetStore petStore = (PetStore) bf.getBean("petStore");
+        PetStore petStore2 = (PetStore) bf.getBean("petStore");
+        Assert.assertEquals(petStore, petStore2);
+
     }
 }
