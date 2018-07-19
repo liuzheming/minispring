@@ -2,14 +2,7 @@ package mini.spring.beans.factory.support;
 
 import mini.spring.beans.BeanDefinition;
 import mini.spring.beans.factory.BeanFactory;
-import mini.spring.utils.ClassUtils;
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 
-import java.io.InputStream;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -17,6 +10,7 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
 
 
     private final Map<String, BeanDefinition> beanDefMap = new ConcurrentHashMap<>();
+    private final Map<String, Object> beanMap = new ConcurrentHashMap<>();
 
     public DefaultBeanFactory() {
     }
@@ -30,6 +24,20 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
     public Object getBean(String beanId) {
         BeanDefinition bd = beanDefMap.get(beanId);
         if (bd == null) return null;
+        if (bd.isSingleton()) {
+            Object bean = beanMap.get(bd.getId());
+            if (bean != null) {
+                return bean;
+            }
+            bean = createBean(bd);
+            beanMap.put(bd.getId(), bean);
+            return bean;
+        }
+        return createBean(bd);
+    }
+
+
+    private Object createBean(BeanDefinition bd) {
         Object bean = null;
         try {
             Class clazz = Class.forName(bd.getBeanClassName());
@@ -39,7 +47,6 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
         }
         return bean;
     }
-
 
 //    @Override
 //    public BeanDefinition getBeanDefinition(String beanId) {

@@ -7,6 +7,8 @@ import mini.spring.beans.factory.support.BeanDefinitionRegistry;
 import mini.spring.beans.factory.support.DefaultBeanFactory;
 import mini.spring.beans.factory.xml.XMLBeanDefinitionReader;
 import mini.spring.beans.factory.xml.support.DefaultXMLBeanDefinitionReader;
+import mini.spring.core.io.support.ClassPathResource;
+import mini.spring.test.entity.PetStore;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,7 +37,7 @@ public class BeanFactoryTest {
      */
     @Test
     public void testGetBean() {
-        /* BeanFactory兼职搞xml加载的版本 */
+        /*  BeanFactory兼职搞xml加载的版本 */
 //        BeanFactory bf = new DefaultBeanFactory("spring-config-v1.xml");
 //        BeanDefinition bd = bf.getBeanDefinition("petStore");
 //        assertEquals(bd.getBeanClassName(), "mini.spring.test.v1.PetStore");
@@ -47,22 +49,18 @@ public class BeanFactoryTest {
         // 读取XML和注册BeanDefinition
         xmlReader.loadBeanDefinition("spring-config-v1.xml");
         BeanDefinition petStoreDef = ((BeanDefinitionRegistry) bf).getBeanDefinition("petStore");
-        Assert.assertEquals("mini.spring.test.v1.PetStore", petStoreDef.getBeanClassName());
+        Assert.assertEquals("mini.spring.test.entity.PetStore", petStoreDef.getBeanClassName());
         PetStore petStore = (PetStore) bf.getBean("petStore");
         Assert.assertNotNull(petStore);
-//        PetStore petStore2 = (PetStore) bf.getBean("petStore");
-//        Assert.assertEquals(petStore, petStore2);
-
     }
 
-    /**
-     * 测试获取单例
-     */
     @Test
     public void testGetSingleton() {
+        BeanFactory bf = new DefaultBeanFactory();
+        XMLBeanDefinitionReader xmlReader = new DefaultXMLBeanDefinitionReader(bf);
+        xmlReader.loadBeanDefinition(new ClassPathResource("spring-config-v1.xml"));
         PetStore petStore = (PetStore) bf.getBean("petStore");
         PetStore petStore2 = (PetStore) bf.getBean("petStore");
         Assert.assertEquals(petStore, petStore2);
-
     }
 }
