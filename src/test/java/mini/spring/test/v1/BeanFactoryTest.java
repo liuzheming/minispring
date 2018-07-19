@@ -47,7 +47,7 @@ public class BeanFactoryTest {
         /* 加载xml的功能从BeanFactory拆分出来的版本 */
 
         // 读取XML和注册BeanDefinition
-        xmlReader.loadBeanDefinition("spring-config-v1.xml");
+        xmlReader.loadBeanDefinition(new ClassPathResource("spring-config-v1.xml"));
         BeanDefinition petStoreDef = ((BeanDefinitionRegistry) bf).getBeanDefinition("petStore");
         Assert.assertEquals("mini.spring.test.entity.PetStore", petStoreDef.getBeanClassName());
         PetStore petStore = (PetStore) bf.getBean("petStore");
