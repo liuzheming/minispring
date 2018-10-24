@@ -6,6 +6,7 @@ import mini.spring.core.io.Resource;
 
 public interface XMLBeanDefinitionReader {
 
+
     void registerBeanDefinition(BeanDefinition beanDefinition);
 
     void loadBeanDefinition(Resource resource);

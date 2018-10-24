@@ -28,9 +28,9 @@ public class ApplicationContextTest {
     @Test
     public void testFxtGetBean() {
         String path = "/Users/lzm/Documents/IEDA_Workspace/minispring/src/test/resources/spring-config-v1.xml";
-        ApplicationContext fxt = new FileSystemXMLApplicationContext(path);
-        PetStore petStore = (PetStore) fxt.getBean("petStore");
-        PetStore petStore1 = (PetStore) fxt.getBean("petStore");
+        ApplicationContext cxt = new FileSystemXMLApplicationContext(path);
+        PetStore petStore = (PetStore) cxt.getBean("petStore");
+        PetStore petStore1 = (PetStore) cxt.getBean("petStore");
         Assert.assertNotNull(petStore);
         Assert.assertEquals(petStore, petStore1);
     }

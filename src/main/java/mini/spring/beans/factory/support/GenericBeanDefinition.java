@@ -1,6 +1,10 @@
 package mini.spring.beans.factory.support;
 
 import mini.spring.beans.BeanDefinition;
+import mini.spring.beans.PropertyValue;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GenericBeanDefinition implements BeanDefinition {
 
@@ -9,6 +13,8 @@ public class GenericBeanDefinition implements BeanDefinition {
     private String beanClassName;
 
     private String scope;
+
+    private List<PropertyValue> propVals = new ArrayList<>();
 
     public GenericBeanDefinition(String id, String beanClassName, String scope) {
         this.id = id;
@@ -29,7 +35,7 @@ public class GenericBeanDefinition implements BeanDefinition {
 
     @Override
     public boolean isSingleton() {
-        return SINGLETON.equalsIgnoreCase(scope);
+        return SCOPE_SINGLETON.equalsIgnoreCase(scope);
     }
 
 
@@ -40,5 +46,10 @@ public class GenericBeanDefinition implements BeanDefinition {
 
     public void setBeanClassName(String beanClassName) {
         this.beanClassName = beanClassName;
+    }
+
+    @Override
+    public List<PropertyValue> getPropValues(){
+        return this.propVals;
     }
 }

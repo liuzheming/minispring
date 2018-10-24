@@ -22,6 +22,11 @@ public class DefaultXMLBeanDefinitionReader implements XMLBeanDefinitionReader {
     private static final String ID_ATTRIBUTE = "id";
     private static final String CLASS_ATTRIBUTE = "class";
     private static final String SCOPE = "scope";
+    private static final String SCOPE_ATTRIBUTE = "scope";
+    private static final String PROPERTY_ELEMENT = "property";
+    private static final String REF_ATTRIBUTE = "ref";
+    private static final String VALUE_ATTRIBUTE = "value";
+    private static final String NAME_ATTRIBUTE = "name";
 
     public DefaultXMLBeanDefinitionReader(BeanFactory beanDefRegistry) {
         this.beanDefRegistry = (BeanDefinitionRegistry) beanDefRegistry;
@@ -60,5 +65,17 @@ public class DefaultXMLBeanDefinitionReader implements XMLBeanDefinitionReader {
         beanDefRegistry.registerBeanDefinition(beanDefinition);
     }
 
+    private void parsePropElement(Element beanElem, BeanDefinition bd) {
+
+        Iterator ite = beanElem.elementIterator(PROPERTY_ELEMENT);
+        while (ite.hasNext()) {
+            Element propElem = (Element) ite.next();
+            String propName = propElem.attributeValue(NAME_ATTRIBUTE);
+//            String propName = propElem.attributeValue(REF_ATTRIBUTE);
+//            String propName = propElem.attributeValue(CLASS_ATTRIBUTE);
+
+        }
+
+    }
 
 }
