@@ -1,14 +1,20 @@
 package mini.spring.beans.factory.xml.support;
 
 import mini.spring.beans.BeanDefinition;
+import mini.spring.beans.PropertyValue;
 import mini.spring.beans.factory.BeanFactory;
+import mini.spring.beans.factory.config.RuntimeBeanReference;
+import mini.spring.beans.factory.config.TypedStringValue;
 import mini.spring.beans.factory.support.BeanDefinitionRegistry;
 import mini.spring.beans.factory.support.GenericBeanDefinition;
 import mini.spring.beans.factory.xml.XMLBeanDefinitionReader;
 import mini.spring.core.io.Resource;
 import org.dom4j.Document;
 import org.dom4j.Element;
+import org.dom4j.bean.BeanElement;
 import org.dom4j.io.SAXReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +22,8 @@ import java.util.Iterator;
 
 
 public class DefaultXMLBeanDefinitionReader implements XMLBeanDefinitionReader {
+
+    private Logger logger = LoggerFactory.getLogger(DefaultXMLBeanDefinitionReader.class);
 
     private BeanDefinitionRegistry beanDefRegistry;
 
@@ -40,7 +48,7 @@ public class DefaultXMLBeanDefinitionReader implements XMLBeanDefinitionReader {
             SAXReader reader = new SAXReader();
             Document doc = reader.read(is);
             Iterator<Element> ite = doc.getRootElement().elementIterator();
-            while (ite.hasNext()) {
+            while (ite.hasNext()) { // 循环读出<bean>标签
                 Element ele = ite.next();
                 String id = ele.attributeValue(ID_ATTRIBUTE);
                 String beanClassName = ele.attributeValue(CLASS_ATTRIBUTE);
@@ -65,17 +73,44 @@ public class DefaultXMLBeanDefinitionReader implements XMLBeanDefinitionReader {
         beanDefRegistry.registerBeanDefinition(beanDefinition);
     }
 
-    private void parsePropElement(Element beanElem, BeanDefinition bd) {
-
+    /**
+     * 解析<property>标签，注册相关信息到BeanDefinition
+     *
+     * @param beanElem <bean>标签
+     * @param bd       BeanDefinition
+     */
+    private void parsePropertyElement(Element beanElem, BeanDefinition bd) {
         Iterator ite = beanElem.elementIterator(PROPERTY_ELEMENT);
         while (ite.hasNext()) {
             Element propElem = (Element) ite.next();
             String propName = propElem.attributeValue(NAME_ATTRIBUTE);
-//            String propName = propElem.attributeValue(REF_ATTRIBUTE);
-//            String propName = propElem.attributeValue(CLASS_ATTRIBUTE);
+            if (propName == null || propName.length() == 0) {
+                logger.error("Tag 'property' must have a 'name' attribute [Bean={}]", propName);
+                return;
+            }
 
+            Object val = parsePropertyValue(propElem, bd, propName);
+            PropertyValue pv = new PropertyValue(propName, val);
+            bd.getPropValues().add(pv);
         }
+    }
 
+    private Object parsePropertyValue(Element ele, BeanDefinition bd, String propName) {
+        String elementName = (propName != null) ? "<property> element for property '" + propName + "'"
+                : "<constructor-arg> element";
+        boolean hasRefAttribute = (ele.attribute(NAME_ATTRIBUTE) != null);
+        boolean hasValueAttribute = (ele.attribute(VALUE_ATTRIBUTE) != null);
+        if (hasRefAttribute) {
+            String refName = ele.attributeValue(REF_ATTRIBUTE);
+            if (refName == null || refName.length() == 0) {
+                logger.error(propName + "contains empty 'ref' attribute");
+            }
+            return new RuntimeBeanReference(refName);
+        } else if (hasValueAttribute) {
+            return new TypedStringValue(ele.attributeValue(VALUE_ATTRIBUTE));
+        } else {
+            throw new RuntimeException(elementName + " must specify a ref or value");
+        }
     }
 
 }

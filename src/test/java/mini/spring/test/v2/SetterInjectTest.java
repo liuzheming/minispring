@@ -2,13 +2,13 @@ package mini.spring.test.v2;
 
 import mini.spring.beans.BeanDefinition;
 import mini.spring.beans.PropertyValue;
+import mini.spring.beans.factory.config.RuntimeBeanReference;
 import mini.spring.beans.factory.support.DefaultBeanFactory;
 import mini.spring.beans.factory.xml.XMLBeanDefinitionReader;
 import mini.spring.beans.factory.xml.support.DefaultXMLBeanDefinitionReader;
 import mini.spring.core.io.support.ClassPathResource;
-import mini.spring.test.entity.AccountDao;
-import mini.spring.test.entity.ItemDao;
 import org.junit.Assert;
+import org.junit.Test;
 
 import java.util.List;
 
@@ -19,6 +19,7 @@ import java.util.List;
  */
 public class SetterInjectTest {
 
+    @Test
     public void testSetter() {
 
 //        ApplicationContext cxt =
@@ -36,13 +37,13 @@ public class SetterInjectTest {
             PropertyValue pv = this.getPropVal(pvs, "accountDao");
             Assert.assertNotNull(pv);
             Assert.assertNotNull(pv.getValue());
-//            Assert.assertTrue(pv.getValue() instanceof RunTimeBeanReference);
+            Assert.assertTrue(pv.getValue() instanceof RuntimeBeanReference);
         }
         {
             PropertyValue pv = this.getPropVal(pvs, "itemDao");
             Assert.assertNotNull(pv);
             Assert.assertNotNull(pv.getValue());
-//            Assert.assertTrue(pv.getValue() instanceof RunTimeBeanReference);
+            Assert.assertTrue(pv.getValue() instanceof RuntimeBeanReference);
         }
     }
 
