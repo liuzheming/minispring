@@ -53,7 +53,9 @@ public class DefaultXMLBeanDefinitionReader implements XMLBeanDefinitionReader {
                 String id = ele.attributeValue(ID_ATTRIBUTE);
                 String beanClassName = ele.attributeValue(CLASS_ATTRIBUTE);
                 String scope = ele.attributeValue(SCOPE);
-                registerBeanDefinition(new GenericBeanDefinition(id, beanClassName, scope));
+                BeanDefinition bd = new GenericBeanDefinition(id, beanClassName, scope);
+                registerBeanDefinition(bd);
+                this.parsePropertyElement(ele, bd);
             }
         } catch (Exception e) {
             e.printStackTrace();

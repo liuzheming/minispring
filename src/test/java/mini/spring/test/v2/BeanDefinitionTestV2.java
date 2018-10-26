@@ -17,7 +17,7 @@ import java.util.List;
  * <p>
  * Created by lzm on 2018/10/23.
  */
-public class SetterInjectTest {
+public class BeanDefinitionTestV2 {
 
     @Test
     public void testSetter() {
@@ -32,7 +32,7 @@ public class SetterInjectTest {
                 new ClassPathResource("spring-config-v2.xml"));
         BeanDefinition bd = beanFactory.getBeanDefinition("petStore");
         List<PropertyValue> pvs = bd.getPropValues();
-        Assert.assertTrue(pvs.size() == 2);
+        Assert.assertEquals(pvs.size(), 2);
         {
             PropertyValue pv = this.getPropVal(pvs, "accountDao");
             Assert.assertNotNull(pv);
