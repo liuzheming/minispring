@@ -10,7 +10,7 @@
     <bean id="petStore" class="mini.spring.test.entity.PetStore" scope="singleton">
         <property name="accountDao" ref="accountDao"/>
         <property name="itemDao" ref="itemDao"/>
-        <!--<property name="env" value="environment"/>-->
+        <property name="owner" value="lzm"/>
     </bean>
 
     <bean id="accountDao" class="mini.spring.test.entity.AccountDao"/>
