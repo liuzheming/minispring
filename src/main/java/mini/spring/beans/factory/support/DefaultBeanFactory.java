@@ -1,8 +1,16 @@
 package mini.spring.beans.factory.support;
 
 import mini.spring.beans.BeanDefinition;
+import mini.spring.beans.PropertyValue;
+import mini.spring.beans.factory.BeanCreationException;
 import mini.spring.beans.factory.BeanFactory;
+import mini.spring.utils.ClassUtils;
 
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -11,6 +19,7 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
 
     private final Map<String, BeanDefinition> beanDefMap = new ConcurrentHashMap<>();
     private final Map<String, Object> beanMap = new ConcurrentHashMap<>();
+    private ClassLoader beanClassLoader;
 
     public DefaultBeanFactory() {
     }
@@ -38,14 +47,46 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
 
 
     private Object createBean(BeanDefinition bd) {
-        Object bean = null;
-        try {
-            Class clazz = Class.forName(bd.getBeanClassName());
-            bean = clazz.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Object bean = instantiateBean(bd);
+        populateBean(bd, bean);
         return bean;
+    }
+
+    private Object instantiateBean(BeanDefinition bd) {
+        ClassLoader cl = this.getBeanClassLoader();
+        String beanClassName = bd.getBeanClassName();
+        try {
+            Class clazz = cl.loadClass(beanClassName);
+            return clazz.newInstance();
+        } catch (Exception e) {
+            throw new BeanCreationException("create bean for " + beanClassName + " failed", e);
+        }
+    }
+
+    private void populateBean(BeanDefinition bd, Object bean) {
+        List<PropertyValue> pvs = bd.getPropValues();
+        if (pvs == null || pvs.isEmpty()) {
+            return;
+        }
+        BeanDefinitionValueResolver resolver = new BeanDefinitionValueResolver(this);
+
+        try {
+            for (PropertyValue pv : pvs) {
+                Object result = resolver.resolveValueIfNecessary(pv.getValue());
+                BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());
+                PropertyDescriptor[] pds = beanInfo.getPropertyDescriptors();
+                for (PropertyDescriptor pd : pds) {
+                    if (pd.getName().equals(pv.getName())) {
+                        Method setter = pd.getWriteMethod();
+                        setter.invoke(bean, result);
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new BeanCreationException("Failed to obtain BeanInfo for class [" + bd.getBeanClassName() + "]", e);
+        }
+
     }
 
 //    @Override
@@ -57,4 +98,14 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
     public void registerBeanDefinition(BeanDefinition beanDef) {
         this.beanDefMap.put(beanDef.getId(), beanDef);
     }
+
+    public void setBeanClassLoader(ClassLoader beanClassLoader) {
+        this.beanClassLoader = beanClassLoader;
+    }
+
+    private ClassLoader getBeanClassLoader() {
+        return (this.beanClassLoader != null ? this.beanClassLoader : ClassUtils.getDefaultClassLoader());
+    }
+
+
 }

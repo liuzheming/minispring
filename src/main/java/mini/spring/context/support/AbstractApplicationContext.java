@@ -6,6 +6,7 @@ import mini.spring.beans.factory.xml.support.DefaultXMLBeanDefinitionReader;
 import mini.spring.context.ApplicationContext;
 import mini.spring.core.io.Resource;
 import mini.spring.core.io.support.FileSystemResource;
+import mini.spring.utils.ClassUtils;
 
 /**
  * Description:
@@ -16,10 +17,13 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
 
     private DefaultBeanFactory beanFactory;
 
+    private ClassLoader beanClassLoader;
+
     public AbstractApplicationContext(String path) {
         beanFactory = new DefaultBeanFactory();
-        XMLBeanDefinitionReader bdf = new DefaultXMLBeanDefinitionReader(beanFactory);
-        bdf.loadBeanDefinition(getResource(path));
+        XMLBeanDefinitionReader reader = new DefaultXMLBeanDefinitionReader(beanFactory);
+        reader.loadBeanDefinition(getResource(path));
+        beanFactory.setBeanClassLoader(this.getBeanClassLoader());
     }
 
     @Override
@@ -28,4 +32,12 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
     }
 
     abstract Resource getResource(String path);
+
+    public ClassLoader getBeanClassLoader() {
+        return (this.beanClassLoader != null ? this.beanClassLoader : ClassUtils.getDefaultClassLoader());
+    }
+
+    public void setBeanClassLoader(ClassLoader beanClassLoader) {
+        this.beanClassLoader = beanClassLoader;
+    }
 }

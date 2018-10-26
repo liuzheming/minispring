@@ -6,6 +6,7 @@ import mini.spring.test.entity.AccountDao;
 import mini.spring.test.entity.ItemDao;
 import mini.spring.test.entity.PetStore;
 import org.junit.Assert;
+import org.junit.Test;
 
 
 /**
@@ -15,9 +16,10 @@ import org.junit.Assert;
  */
 public class ApplicationTestV2 {
 
+    @Test
     public void testGetBeanProperty() {
 
-        ApplicationContext cxt = new ClassPathXMLApplicationContext("spring-config-v2");
+        ApplicationContext cxt = new ClassPathXMLApplicationContext("spring-config-v2.xml");
         PetStore petStore = (PetStore) cxt.getBean("petStore");
 
         Assert.assertNotNull(petStore.getAccountDao());
