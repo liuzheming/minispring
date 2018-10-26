@@ -1,9 +1,11 @@
 package mini.spring.beans.factory.support;
 
+import com.sun.media.jfxmedia.logging.Logger;
 import mini.spring.beans.BeanDefinition;
 import mini.spring.beans.PropertyValue;
 import mini.spring.beans.factory.BeanCreationException;
 import mini.spring.beans.factory.BeanFactory;
+import mini.spring.beans.factory.config.RuntimeBeanReference;
 import mini.spring.utils.ClassUtils;
 
 import java.beans.BeanInfo;
@@ -31,7 +33,12 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
 
     @Override
     public Object getBean(String beanId) {
-        BeanDefinition bd = beanDefMap.get(beanId);
+        BeanDefinition bd;
+        try {
+            bd = beanDefMap.get(beanId);
+        } catch (Exception e) {
+            throw new RuntimeException("[beanId=" + beanId + "]", e);
+        }
         if (bd == null) return null;
         if (bd.isSingleton()) {
             Object bean = beanMap.get(bd.getId());
@@ -78,7 +85,11 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
                 for (PropertyDescriptor pd : pds) {
                     if (pd.getName().equals(pv.getName())) {
                         Method setter = pd.getWriteMethod();
-                        setter.invoke(bean, result);
+                        if (pv.getValue() instanceof RuntimeBeanReference) {
+                            setter.invoke(bean, result);
+                        } else {
+                            setter.invoke(bean, result);
+                        }
                         break;
                     }
                 }

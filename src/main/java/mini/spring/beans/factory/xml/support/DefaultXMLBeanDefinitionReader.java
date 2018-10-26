@@ -100,10 +100,10 @@ public class DefaultXMLBeanDefinitionReader implements XMLBeanDefinitionReader {
     private Object parsePropertyValue(Element ele, BeanDefinition bd, String propName) {
         String elementName = (propName != null) ? "<property> element for property '" + propName + "'"
                 : "<constructor-arg> element";
-        boolean hasRefAttribute = (ele.attribute(NAME_ATTRIBUTE) != null);
+        boolean hasRefAttribute = (ele.attribute(REF_ATTRIBUTE) != null);
         boolean hasValueAttribute = (ele.attribute(VALUE_ATTRIBUTE) != null);
         if (hasRefAttribute) {
-            String refName = ele.attributeValue(REF_ATTRIBUTE);
+            String refName = ele.attributeValue(NAME_ATTRIBUTE);
             if (refName == null || refName.length() == 0) {
                 logger.error(propName + "contains empty 'ref' attribute");
             }
