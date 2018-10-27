@@ -25,7 +25,7 @@ public class TypeConverterTest {
         DefaultXMLBeanDefinitionReader reader =
                 new DefaultXMLBeanDefinitionReader(beanFactory);
         reader.loadBeanDefinition(new ClassPathResource("spring-config-v2.xml"));
-        TypeConverter converter = new SimpleTypeConverter(beanFactory);
+        TypeConverter converter = new SimpleTypeConverter();
         Integer i = converter.convertIfNecessary("3", Integer.class);
         Assert.assertEquals(3, i.intValue());
     }

@@ -1,9 +1,5 @@
 package mini.spring.beans;
 
-import mini.spring.beans.factory.BeanFactory;
-import mini.spring.beans.factory.config.RuntimeBeanReference;
-import mini.spring.beans.factory.config.TypedStringValue;
-
 /**
  * Description:
  * <p>
@@ -11,10 +7,8 @@ import mini.spring.beans.factory.config.TypedStringValue;
  */
 public class SimpleTypeConverter implements TypeConverter {
 
-    private BeanFactory beanFactory;
 
-    public SimpleTypeConverter(BeanFactory bf) {
-        this.beanFactory = bf;
+    public SimpleTypeConverter() {
     }
 
     /**
