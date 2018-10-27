@@ -11,7 +11,6 @@ import mini.spring.beans.factory.xml.XMLBeanDefinitionReader;
 import mini.spring.core.io.Resource;
 import org.dom4j.Document;
 import org.dom4j.Element;
-import org.dom4j.bean.BeanElement;
 import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

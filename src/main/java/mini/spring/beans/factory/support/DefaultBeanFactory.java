@@ -3,6 +3,8 @@ package mini.spring.beans.factory.support;
 import com.sun.media.jfxmedia.logging.Logger;
 import mini.spring.beans.BeanDefinition;
 import mini.spring.beans.PropertyValue;
+import mini.spring.beans.SimpleTypeConverter;
+import mini.spring.beans.TypeConverter;
 import mini.spring.beans.factory.BeanCreationException;
 import mini.spring.beans.factory.BeanFactory;
 import mini.spring.beans.factory.config.RuntimeBeanReference;
@@ -85,11 +87,14 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
                 for (PropertyDescriptor pd : pds) {
                     if (pd.getName().equals(pv.getName())) {
                         Method setter = pd.getWriteMethod();
-                        if (pv.getValue() instanceof RuntimeBeanReference) {
-                            setter.invoke(bean, result);
-                        } else {
-                            setter.invoke(bean, result);
-                        }
+                        TypeConverter converter = new SimpleTypeConverter(this);
+                        setter.invoke(bean, converter.convertIfNecessary(result, pd.getPropertyType()));
+//                        if (pv.getValue() instanceof RuntimeBeanReference) {
+//                            setter.invoke(bean, result);
+//                        } else {
+//                            result = new SimpleTypeConverter().convertIfNecessary(result, );
+//                            setter.invoke(bean, result);
+//                        }
                         break;
                     }
                 }

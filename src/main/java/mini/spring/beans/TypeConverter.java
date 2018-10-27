@@ -8,5 +8,5 @@ package mini.spring.beans;
 public interface TypeConverter {
 
 
-    <T> T convertIfNecessary(String strVal, Class<T> clazz);
+    <T> T convertIfNecessary(Object value, Class<T> clazz);
 }
