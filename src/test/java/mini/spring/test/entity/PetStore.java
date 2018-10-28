@@ -10,6 +10,16 @@ public class PetStore {
 
     private int version;
 
+    public PetStore() {
+
+    }
+
+    public PetStore(AccountDao accountDao, ItemDao itemDao, String owner) {
+        this.accountDao = accountDao;
+        this.itemDao = itemDao;
+        this.owner = owner;
+    }
+
     public int getVersion() {
         return version;
     }
