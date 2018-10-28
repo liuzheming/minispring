@@ -8,13 +8,13 @@ public class PetStore {
 
     private String owner;
 
-    private Integer version;
+    private int version;
 
-    public Integer getVersion() {
+    public int getVersion() {
         return version;
     }
 
-    public void setVersion(Integer version) {
+    public void setVersion(int version) {
         this.version = version;
     }
 
