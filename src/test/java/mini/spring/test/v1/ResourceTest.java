@@ -27,6 +27,7 @@ public class ResourceTest {
         } finally {
             if (is != null) is.close();
         }
+        
         Assert.assertNotNull(is);
     }
 //
