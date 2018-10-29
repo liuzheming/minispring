@@ -1,8 +1,14 @@
 package mini.spring.beans;
 
+import java.util.List;
+
 public interface BeanDefinition {
 
-    String SINGLETON = "singleton";
+    String SCOPE_SINGLETON = "singleton";
+
+    String SCOPE_PROTOTYPE = "prototype";
+
+    String SCOPE_DEFAULT = "";
 
     String getBeanClassName();
 
@@ -10,5 +16,6 @@ public interface BeanDefinition {
 
     boolean isSingleton();
 
+    List<PropertyValue> getPropValues();
 
 }
