@@ -28,7 +28,12 @@ public class ConstructorResolver {
         this.factory = bf;
     }
 
-
+    /**
+     * 通过构造器来创建Bean对象，并对成员变量进行赋值
+     *
+     * @param bd bean定义
+     * @return 创建后的bean
+     */
     public Object autowireConstructor(BeanDefinition bd) {
         Constructor<?> constructorToUse = null;
         Object[] argsToUse = null;
