@@ -5,7 +5,7 @@ import mini.spring.beans.PropertyValue;
 import mini.spring.beans.SimpleTypeConverter;
 import mini.spring.beans.TypeConverter;
 import mini.spring.beans.factory.BeanCreationException;
-import mini.spring.beans.factory.BeanFactory;
+import mini.spring.beans.factory.ConfigurableBeanFactory;
 import mini.spring.utils.ClassUtils;
 
 import java.beans.BeanInfo;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
+public class DefaultBeanFactory implements ConfigurableBeanFactory, BeanDefinitionRegistry {
 
 
     private final Map<String, BeanDefinition> beanDefMap = new ConcurrentHashMap<>();
@@ -113,11 +113,13 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
         this.beanDefMap.put(beanDef.getId(), beanDef);
     }
 
+    @Override
     public void setBeanClassLoader(ClassLoader beanClassLoader) {
         this.beanClassLoader = beanClassLoader;
     }
 
-    private ClassLoader getBeanClassLoader() {
+    @Override
+    public ClassLoader getBeanClassLoader() {
         return (this.beanClassLoader != null ? this.beanClassLoader : ClassUtils.getDefaultClassLoader());
     }
 

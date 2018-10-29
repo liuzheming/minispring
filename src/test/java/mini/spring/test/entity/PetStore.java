@@ -14,10 +14,11 @@ public class PetStore {
 
     }
 
-    public PetStore(AccountDao accountDao, ItemDao itemDao, String owner) {
+    public PetStore(AccountDao accountDao, ItemDao itemDao, String owner, int version) {
         this.accountDao = accountDao;
         this.itemDao = itemDao;
         this.owner = owner;
+        this.version = version;
     }
 
     public int getVersion() {

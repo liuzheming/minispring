@@ -18,4 +18,6 @@ public interface BeanDefinition {
 
     List<PropertyValue> getPropValues();
 
+    ConstructorArgument getConstructorArgument();
+
 }

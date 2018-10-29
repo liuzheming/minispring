@@ -1,6 +1,7 @@
 package mini.spring.beans.factory.xml.support;
 
 import mini.spring.beans.BeanDefinition;
+import mini.spring.beans.ConstructorArgument;
 import mini.spring.beans.PropertyValue;
 import mini.spring.beans.factory.BeanFactory;
 import mini.spring.beans.factory.config.RuntimeBeanReference;
@@ -20,6 +21,9 @@ import java.io.InputStream;
 import java.util.Iterator;
 
 
+/**
+ * 读取XML并创建对应的BeanDefinition
+ */
 public class DefaultXMLBeanDefinitionReader implements XMLBeanDefinitionReader {
 
     private Logger logger = LoggerFactory.getLogger(DefaultXMLBeanDefinitionReader.class);
@@ -34,6 +38,9 @@ public class DefaultXMLBeanDefinitionReader implements XMLBeanDefinitionReader {
     private static final String REF_ATTRIBUTE = "ref";
     private static final String VALUE_ATTRIBUTE = "value";
     private static final String NAME_ATTRIBUTE = "name";
+    private static final String CONSTRUCTOR_ARG_ELEMENT = "constructor-arg";
+    private static final String TYPE_ATTRIBUTE = "type";
+
 
     public DefaultXMLBeanDefinitionReader(BeanFactory beanDefRegistry) {
         this.beanDefRegistry = (BeanDefinitionRegistry) beanDefRegistry;
@@ -55,6 +62,7 @@ public class DefaultXMLBeanDefinitionReader implements XMLBeanDefinitionReader {
                 BeanDefinition bd = new GenericBeanDefinition(id, beanClassName, scope);
                 registerBeanDefinition(bd);
                 this.parsePropertyElement(ele, bd);
+                this.parseConstructorElement(ele, bd);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -74,6 +82,35 @@ public class DefaultXMLBeanDefinitionReader implements XMLBeanDefinitionReader {
         beanDefRegistry.registerBeanDefinition(beanDefinition);
     }
 
+
+    /**
+     * 解析<constructor-arg>标签，注册相关信息到BeanDefinition
+     *
+     * @param beanEle <bean>标签和其中的所有内容
+     * @param bd      bean定义
+     */
+    private void parseConstructorElement(Element beanEle, BeanDefinition bd) {
+        Iterator constructors = beanEle.elementIterator(CONSTRUCTOR_ARG_ELEMENT);
+        while (constructors.hasNext()) {
+            Element constructor = (Element) constructors.next();
+            parseConstructorArgElement(constructor, bd);
+        }
+    }
+
+    private void parseConstructorArgElement(Element constructorEle, BeanDefinition bd) {
+        String typeAttr = constructorEle.attributeValue(TYPE_ATTRIBUTE);
+        String nameAttr = constructorEle.attributeValue(NAME_ATTRIBUTE);
+        Object value = parsePropertyValue(constructorEle, bd, null);
+        ConstructorArgument.ValueHolder valueHolder = new ConstructorArgument.ValueHolder(value);
+        if (typeAttr != null && typeAttr.length() != 0) {
+            valueHolder.setType(typeAttr);
+        }
+        if (nameAttr != null && nameAttr.length() != 0) {
+            valueHolder.setName(nameAttr);
+        }
+        bd.getConstructorArgument().addArgumentValue(valueHolder);
+    }
+
     /**
      * 解析<property>标签，注册相关信息到BeanDefinition
      *
@@ -81,9 +118,9 @@ public class DefaultXMLBeanDefinitionReader implements XMLBeanDefinitionReader {
      * @param bd       BeanDefinition
      */
     private void parsePropertyElement(Element beanElem, BeanDefinition bd) {
-        Iterator ite = beanElem.elementIterator(PROPERTY_ELEMENT);
-        while (ite.hasNext()) {
-            Element propElem = (Element) ite.next();
+        Iterator properties = beanElem.elementIterator(PROPERTY_ELEMENT);
+        while (properties.hasNext()) {
+            Element propElem = (Element) properties.next();
             String propName = propElem.attributeValue(NAME_ATTRIBUTE);
             if (propName == null || propName.length() == 0) {
                 logger.error("Tag 'property' must have a 'name' attribute [Bean={}]", propName);
@@ -96,13 +133,21 @@ public class DefaultXMLBeanDefinitionReader implements XMLBeanDefinitionReader {
         }
     }
 
+    /**
+     * 解析出标签定义对应的值
+     *
+     * @param ele      标签
+     * @param bd       bean定义
+     * @param propName 属性名称
+     * @return
+     */
     private Object parsePropertyValue(Element ele, BeanDefinition bd, String propName) {
         String elementName = (propName != null) ? "<property> element for property '" + propName + "'"
                 : "<constructor-arg> element";
         boolean hasRefAttribute = (ele.attribute(REF_ATTRIBUTE) != null);
         boolean hasValueAttribute = (ele.attribute(VALUE_ATTRIBUTE) != null);
         if (hasRefAttribute) {
-            String refName = ele.attributeValue(NAME_ATTRIBUTE);
+            String refName = ele.attributeValue(REF_ATTRIBUTE);
             if (refName == null || refName.length() == 0) {
                 logger.error(propName + "contains empty 'ref' attribute");
             }

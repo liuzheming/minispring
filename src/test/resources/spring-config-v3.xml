@@ -12,6 +12,7 @@
         <constructor-arg ref="accountDao"/>
         <constructor-arg ref="itemDao"/>
         <constructor-arg value="lzm"/>
+        <constructor-arg value="1"/>
 
         <!--<property name="accountDao" ref="accountDao"/>-->
         <!--<property name="itemDao" ref="itemDao"/>-->

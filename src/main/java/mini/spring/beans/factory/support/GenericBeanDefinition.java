@@ -1,6 +1,7 @@
 package mini.spring.beans.factory.support;
 
 import mini.spring.beans.BeanDefinition;
+import mini.spring.beans.ConstructorArgument;
 import mini.spring.beans.PropertyValue;
 
 import java.util.ArrayList;
@@ -14,7 +15,9 @@ public class GenericBeanDefinition implements BeanDefinition {
 
     private String scope;
 
-    private List<PropertyValue> propVals = new ArrayList<>();
+    private ConstructorArgument constructorArgument = new ConstructorArgument();
+
+    private List<PropertyValue> propValues = new ArrayList<>();
 
     public GenericBeanDefinition(String id, String beanClassName, String scope) {
         this.id = id;
@@ -49,7 +52,12 @@ public class GenericBeanDefinition implements BeanDefinition {
     }
 
     @Override
-    public List<PropertyValue> getPropValues(){
-        return this.propVals;
+    public List<PropertyValue> getPropValues() {
+        return this.propValues;
+    }
+
+    @Override
+    public ConstructorArgument getConstructorArgument() {
+        return this.constructorArgument;
     }
 }
