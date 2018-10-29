@@ -20,4 +20,6 @@ public interface BeanDefinition {
 
     ConstructorArgument getConstructorArgument();
 
+    boolean hasConstructorArg();
+
 }

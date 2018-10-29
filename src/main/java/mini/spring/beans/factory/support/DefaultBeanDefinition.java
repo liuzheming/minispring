@@ -33,4 +33,9 @@ public class DefaultBeanDefinition implements BeanDefinition {
     public ConstructorArgument getConstructorArgument() {
         return null;
     }
+
+    @Override
+    public boolean hasConstructorArg() {
+        return false;
+    }
 }
