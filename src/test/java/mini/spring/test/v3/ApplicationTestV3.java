@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Description:
+ * Description: 3.测试完整的根据xml内Constructor信息生成Bean功能
  * <p>
  * Created by lzm on 2018/10/28.
  */

@@ -11,7 +11,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Description:
+ * Description: 2. 测试根据BeanDefinition内的Constructor信息创建生成Bean的功能
  * <p>
  * Created by lzm on  2018-10-29 .
  */
