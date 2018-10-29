@@ -27,20 +27,21 @@ public class ResourceTest {
         } finally {
             if (is != null) is.close();
         }
+        
         Assert.assertNotNull(is);
     }
-
-    @Test
-    public void testFileSystemResource() throws Exception {
-        Resource resource = new FileSystemResource
-                ("/Users/lzm/Documents/IEDA_Workspace/minispring/src/test/resources/spring-config-v1.xml");
-        InputStream is = null;
-        try {
-            is = resource.getInputStream();
-            System.out.println(resource.getDescription());
-            Assert.assertNotNull(is);
-        } finally {
-            if (is != null) is.close();
-        }
-    }
+//
+//    @Test
+//    public void testFileSystemResource() throws Exception {
+//        Resource resource = new FileSystemResource
+//                ("/Users/lzm/Documents/IEDA_Workspace/minispring/src/test/resources/spring-config-v1.xml");
+//        InputStream is = null;
+//        try {
+//            is = resource.getInputStream();
+//            System.out.println(resource.getDescription());
+//            Assert.assertNotNull(is);
+//        } finally {
+//            if (is != null) is.close();
+//        }
+//    }
 }

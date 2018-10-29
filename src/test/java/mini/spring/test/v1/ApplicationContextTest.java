@@ -25,6 +25,7 @@ public class ApplicationContextTest {
         Assert.assertEquals(petStore, petStore1);
     }
 
+
     @Test
     public void testFxtGetBean() {
         String path = "/Users/lzm/Documents/IEDA_Workspace/minispring/src/test/resources/spring-config-v1.xml";
@@ -34,5 +35,16 @@ public class ApplicationContextTest {
         Assert.assertNotNull(petStore);
         Assert.assertEquals(petStore, petStore1);
     }
+
+//    @Test
+//    public void testFxtGetBean() {
+//        String path = "/Users/lzm/Documents/IEDA_Workspace/minispring/src/test/resources/spring-config-v1.xml";
+//        ApplicationContext fxt = new FileSystemXMLApplicationContext(path);
+//        PetStore petStore = (PetStore) fxt.getBean("petStore");
+//        PetStore petStore1 = (PetStore) fxt.getBean("petStore");
+//        Assert.assertNotNull(petStore);
+//        Assert.assertEquals(petStore, petStore1);
+//    }
+
 
 }

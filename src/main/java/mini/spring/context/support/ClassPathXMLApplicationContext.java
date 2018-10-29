@@ -1,9 +1,5 @@
 package mini.spring.context.support;
 
-import mini.spring.beans.factory.support.DefaultBeanFactory;
-import mini.spring.beans.factory.xml.XMLBeanDefinitionReader;
-import mini.spring.beans.factory.xml.support.DefaultXMLBeanDefinitionReader;
-import mini.spring.context.ApplicationContext;
 import mini.spring.core.io.Resource;
 import mini.spring.core.io.support.ClassPathResource;
 

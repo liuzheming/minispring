@@ -10,6 +10,7 @@ import mini.spring.beans.factory.xml.support.DefaultXMLBeanDefinitionReader;
 import mini.spring.core.io.support.ClassPathResource;
 import mini.spring.test.entity.PetStore;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 
@@ -19,6 +20,16 @@ import org.junit.Test;
  */
 public class BeanFactoryTest {
 
+
+    private BeanFactory bf = null;
+
+    private XMLBeanDefinitionReader xmlReader = null;
+
+    @Before
+    public void setUP() {
+        bf = new DefaultBeanFactory();
+        xmlReader = new DefaultXMLBeanDefinitionReader(bf);
+    }
 
     /**
      * 测试获取Bean定义
@@ -35,9 +46,7 @@ public class BeanFactoryTest {
 
         /* 加载xml的功能从BeanFactory拆分出来的版本 */
 
-        BeanFactory bf = new DefaultBeanFactory();
         // 读取XML和注册BeanDefinition
-        XMLBeanDefinitionReader xmlReader = new DefaultXMLBeanDefinitionReader(bf);
         xmlReader.loadBeanDefinition(new ClassPathResource("spring-config-v1.xml"));
         BeanDefinition petStoreDef = ((BeanDefinitionRegistry) bf).getBeanDefinition("petStore");
         Assert.assertEquals("mini.spring.test.entity.PetStore", petStoreDef.getBeanClassName());
