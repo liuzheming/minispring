@@ -1,5 +1,8 @@
 package mini.spring.test.entity;
 
+import mini.spring.stereotype.Component;
+
+@Component(value = "petStore")
 public class PetStore {
 
     private AccountDao accountDao;
