@@ -11,7 +11,7 @@ import org.springframework.asm.ClassReader;
 import java.io.IOException;
 
 /**
- * Description: 1. 测试读取Class文件元数据的功能,包括class本身的信息和class被标注的annotation信息
+ * Description: 1. 测试通过读取Class文件，来获取类的元数据的功能,包括class本身的信息和class被标注的annotation信息
  * <p>
  * Created by lzm on  2018-10-30 .
  */
@@ -35,6 +35,9 @@ public class ClassMetadataReadingTest {
     }
 
 
+    /**
+     * 获取class上标注的注解和每个注解中所设置的参数值
+     */
     @Test
     public void testReadAnnotationMetadata() throws IOException {
         ClassPathResource resource = new ClassPathResource("mini/spring/test/entity/PetStore.class");
@@ -45,6 +48,7 @@ public class ClassMetadataReadingTest {
 
         String annotation = "mini.spring.stereotype.Component";
 
+        Assert.assertFalse(visitor.isAbstract());
         Assert.assertTrue(visitor.hasAnnotation(annotation));
         Assert.assertEquals(1, visitor.getAnnotationTypes().size());
         AnnotationAttributes attrs = visitor.getAnnotationAttributes(annotation);
