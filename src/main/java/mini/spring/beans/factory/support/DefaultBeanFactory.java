@@ -6,7 +6,7 @@ import mini.spring.beans.SimpleTypeConverter;
 import mini.spring.beans.TypeConverter;
 import mini.spring.beans.factory.BeanCreationException;
 import mini.spring.beans.factory.ConfigurableBeanFactory;
-import mini.spring.utils.ClassUtils;
+import mini.spring.util.ClassUtils;
 
 import java.beans.BeanInfo;
 import java.beans.Introspector;

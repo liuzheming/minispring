@@ -2,7 +2,7 @@ package mini.spring.core.io.support;
 
 
 import mini.spring.core.io.Resource;
-import mini.spring.utils.Assert;
+import mini.spring.util.Assert;
 
 import java.io.File;
 import java.io.FileInputStream;

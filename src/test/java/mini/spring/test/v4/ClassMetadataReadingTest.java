@@ -7,14 +7,13 @@ import org.junit.Test;
 import org.springframework.asm.ClassReader;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Description:
  * <p>
  * Created by lzm on  2018-10-30 .
  */
-public class ClassReaderTest {
+public class ClassMetadataReadingTest {
 
 
     @Test

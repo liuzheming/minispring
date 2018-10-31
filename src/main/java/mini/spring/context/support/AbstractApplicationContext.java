@@ -5,8 +5,7 @@ import mini.spring.beans.factory.xml.XMLBeanDefinitionReader;
 import mini.spring.beans.factory.xml.support.DefaultXMLBeanDefinitionReader;
 import mini.spring.context.ApplicationContext;
 import mini.spring.core.io.Resource;
-import mini.spring.core.io.support.FileSystemResource;
-import mini.spring.utils.ClassUtils;
+import mini.spring.util.ClassUtils;
 
 /**
  * Description:
