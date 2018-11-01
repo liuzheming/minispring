@@ -7,6 +7,8 @@ import mini.spring.core.annotation.ClassPathBeanDefinitionScanner;
 import mini.spring.core.io.Resource;
 import mini.spring.core.io.support.ClassPathResource;
 import mini.spring.core.io.support.PackageResourceLoader;
+import mini.spring.core.type.AnnotationMetadata;
+import mini.spring.core.type.classreading.SimpleMetadataReader;
 import org.junit.Test;
 
 /**
@@ -25,11 +27,17 @@ public class ClassPathBeanDefinitionScannerTest {
         ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(beanFactory);
         scanner.doScan(basePackage);
 
-
-        XMLBeanDefinitionReader reader = new DefaultXMLBeanDefinitionReader(beanFactory);
         PackageResourceLoader loader = new PackageResourceLoader();
         Resource[] resources = loader.getResources("mini.spring.test.entity");
-        reader.loadBeanDefinition(new ClassPathResource("spring-config-v4.xml"));
+//        XMLBeanDefinitionReader reader = new DefaultXMLBeanDefinitionReader(beanFactory);
+//        reader.loadBeanDefinition(new ClassPathResource("spring-config-v4.xml"));
+
+
+        for (Resource res : resources) {
+            SimpleMetadataReader metaReader = new SimpleMetadataReader(res);
+            AnnotationMetadata amd = metaReader.getAnnotationMetadata();
+//            amd.getAnnotationAttributes()
+        }
 
     }
 

@@ -1,13 +1,15 @@
 package mini.spring.core.annotation;
 
-import com.sun.xml.internal.ws.api.databinding.MetadataReader;
 import mini.spring.beans.BeanDefinition;
 import mini.spring.beans.factory.BeanDefinitionStoreException;
 import mini.spring.beans.factory.support.BeanDefinitionRegistry;
 import mini.spring.beans.factory.support.BeanNameGenerator;
+import mini.spring.beans.factory.support.DefaultBeanDefinition;
 import mini.spring.core.io.Resource;
 import mini.spring.core.io.support.PackageResourceLoader;
-import mini.spring.core.type.ClassMetadata;
+import mini.spring.core.type.classreading.MetadataReader;
+import mini.spring.core.type.classreading.SimpleMetadataReader;
+import mini.spring.stereotype.Component;
 import mini.spring.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,9 +57,12 @@ public class ClassPathBeanDefinitionScanner {
             Resource[] resources = this.resourceLoader.getResources(basePackage);
 
             for (Resource resource : resources) {
-//                MetadataReader reader = new SimpleMe
-            }
+                MetadataReader reader = new SimpleMetadataReader(resource);
+                if (reader.getAnnotationMetadata().hasAnnotation(Component.class.getName())) {
 
+                    BeanDefinition bd = new DefaultBeanDefinition();
+                }
+            }
 
         } catch (IOException ex) {
             throw new BeanDefinitionStoreException("I/O failure during classpath scanning", ex);

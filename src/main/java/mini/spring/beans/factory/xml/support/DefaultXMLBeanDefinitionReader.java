@@ -10,6 +10,7 @@ import mini.spring.beans.factory.support.BeanDefinitionRegistry;
 import mini.spring.beans.factory.support.GenericBeanDefinition;
 import mini.spring.beans.factory.xml.XMLBeanDefinitionReader;
 import mini.spring.core.io.Resource;
+import mini.spring.core.io.support.PackageResourceLoader;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
@@ -55,11 +56,11 @@ public class DefaultXMLBeanDefinitionReader implements XMLBeanDefinitionReader {
             Document doc = reader.read(is);
             Iterator<Element> ite = doc.getRootElement().elementIterator();
             while (ite.hasNext()) { // 循环读出<bean>标签
-
-
                 Element ele = ite.next();
                 if ("component-scan".equals(ele.getName())) {
-                    System.out.println(ele.getName());
+                    String basePackage = ele.attributeValue("base-package");
+                    PackageResourceLoader loader = new PackageResourceLoader();
+                    loader.getResources(basePackage);
                 } else if ("bean".equals(ele.getName())) {
                     String id = ele.attributeValue(ID_ATTRIBUTE);
                     String beanClassName = ele.attributeValue(CLASS_ATTRIBUTE);

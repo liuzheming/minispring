@@ -2,6 +2,7 @@ package mini.spring.test.v4;
 
 import mini.spring.core.io.Resource;
 import mini.spring.core.io.support.PackageResourceLoader;
+import mini.spring.core.type.classreading.SimpleMetadataReader;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,12 +16,13 @@ public class PackageResourceLoaderTest {
 
     @Test
     public void testGetResources() throws Exception {
-        
+
         PackageResourceLoader loader = new PackageResourceLoader();
 
         Resource[] resources = loader.getResources("mini.spring.test.entity");
 
         Assert.assertEquals(3, resources.length);
+
     }
 
 }
