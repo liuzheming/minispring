@@ -15,7 +15,7 @@ import java.io.IOException;
  * <p>
  * Created by lzm on  2018-10-30 .
  */
-public class ClassMetadataReadingTest {
+public class ClassReaderTest {
 
 
     @Test

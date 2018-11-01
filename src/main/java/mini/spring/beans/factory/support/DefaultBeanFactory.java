@@ -115,8 +115,8 @@ public class DefaultBeanFactory implements ConfigurableBeanFactory, BeanDefiniti
 //    }
 
     @Override
-    public void registerBeanDefinition(BeanDefinition beanDef) {
-        this.beanDefMap.put(beanDef.getId(), beanDef);
+    public void registerBeanDefinition(String beanId, BeanDefinition beanDef) {
+        this.beanDefMap.put(beanId, beanDef);
     }
 
     @Override

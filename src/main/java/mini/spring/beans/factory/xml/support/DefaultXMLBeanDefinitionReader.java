@@ -55,14 +55,20 @@ public class DefaultXMLBeanDefinitionReader implements XMLBeanDefinitionReader {
             Document doc = reader.read(is);
             Iterator<Element> ite = doc.getRootElement().elementIterator();
             while (ite.hasNext()) { // 循环读出<bean>标签
+
+
                 Element ele = ite.next();
-                String id = ele.attributeValue(ID_ATTRIBUTE);
-                String beanClassName = ele.attributeValue(CLASS_ATTRIBUTE);
-                String scope = ele.attributeValue(SCOPE);
-                BeanDefinition bd = new GenericBeanDefinition(id, beanClassName, scope);
-                registerBeanDefinition(bd);
-                this.parsePropertyElement(ele, bd);
-                this.parseConstructorElement(ele, bd);
+                if ("component-scan".equals(ele.getName())) {
+                    System.out.println(ele.getName());
+                } else if ("bean".equals(ele.getName())) {
+                    String id = ele.attributeValue(ID_ATTRIBUTE);
+                    String beanClassName = ele.attributeValue(CLASS_ATTRIBUTE);
+                    String scope = ele.attributeValue(SCOPE);
+                    BeanDefinition bd = new GenericBeanDefinition(id, beanClassName, scope);
+                    registerBeanDefinition(bd.getId(), bd);
+                    this.parsePropertyElement(ele, bd);
+                    this.parseConstructorElement(ele, bd);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,8 +84,8 @@ public class DefaultXMLBeanDefinitionReader implements XMLBeanDefinitionReader {
     }
 
     @Override
-    public void registerBeanDefinition(BeanDefinition beanDefinition) {
-        beanDefRegistry.registerBeanDefinition(beanDefinition);
+    public void registerBeanDefinition(String beanId, BeanDefinition beanDefinition) {
+        beanDefRegistry.registerBeanDefinition(beanId, beanDefinition);
     }
 
 
