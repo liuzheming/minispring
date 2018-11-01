@@ -1,11 +1,8 @@
 package mini.spring.test.v4;
 
 import mini.spring.beans.factory.support.DefaultBeanFactory;
-import mini.spring.beans.factory.xml.XMLBeanDefinitionReader;
-import mini.spring.beans.factory.xml.support.DefaultXMLBeanDefinitionReader;
-import mini.spring.core.annotation.ClassPathBeanDefinitionScanner;
+import mini.spring.context.annotation.ClassPathBeanDefinitionScanner;
 import mini.spring.core.io.Resource;
-import mini.spring.core.io.support.ClassPathResource;
 import mini.spring.core.io.support.PackageResourceLoader;
 import mini.spring.core.type.AnnotationMetadata;
 import mini.spring.core.type.classreading.SimpleMetadataReader;

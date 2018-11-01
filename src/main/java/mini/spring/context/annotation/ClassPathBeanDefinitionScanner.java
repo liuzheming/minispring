@@ -1,4 +1,4 @@
-package mini.spring.core.annotation;
+package mini.spring.context.annotation;
 
 import mini.spring.beans.BeanDefinition;
 import mini.spring.beans.factory.BeanDefinitionStoreException;
@@ -59,8 +59,9 @@ public class ClassPathBeanDefinitionScanner {
             for (Resource resource : resources) {
                 MetadataReader reader = new SimpleMetadataReader(resource);
                 if (reader.getAnnotationMetadata().hasAnnotation(Component.class.getName())) {
-
-                    BeanDefinition bd = new DefaultBeanDefinition();
+                    ScannedGenericBeanDefinition bd = new ScannedGenericBeanDefinition(reader.getAnnotationMetadata());
+                    bd.setId(nameGenerator.generateBeanName(bd, registry));
+                    candidate.add(bd);
                 }
             }
 

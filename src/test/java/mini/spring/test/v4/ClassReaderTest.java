@@ -1,6 +1,6 @@
 package mini.spring.test.v4;
 
-import mini.spring.core.annotation.AnnotationAttributes;
+import mini.spring.context.annotation.AnnotationAttributes;
 import mini.spring.core.io.support.ClassPathResource;
 import mini.spring.core.type.classreading.AnnotationMetadataReadingVisitor;
 import mini.spring.core.type.classreading.ClassMetadataReadingVisitor;

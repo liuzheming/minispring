@@ -1,4 +1,4 @@
-package mini.spring.core.annotation;
+package mini.spring.context.annotation;
 
 import mini.spring.util.Assert;
 

@@ -1,6 +1,5 @@
 package mini.spring.test.v4;
 
-import mini.spring.core.annotation.ClassPathBeanDefinitionScanner;
 import mini.spring.core.io.Resource;
 import mini.spring.core.io.support.ClassPathResource;
 import mini.spring.core.type.AnnotationMetadata;

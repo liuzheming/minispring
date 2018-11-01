@@ -9,8 +9,8 @@ import mini.spring.beans.factory.config.TypedStringValue;
 import mini.spring.beans.factory.support.BeanDefinitionRegistry;
 import mini.spring.beans.factory.support.GenericBeanDefinition;
 import mini.spring.beans.factory.xml.XMLBeanDefinitionReader;
+import mini.spring.context.annotation.ClassPathBeanDefinitionScanner;
 import mini.spring.core.io.Resource;
-import mini.spring.core.io.support.PackageResourceLoader;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
@@ -59,8 +59,12 @@ public class DefaultXMLBeanDefinitionReader implements XMLBeanDefinitionReader {
                 Element ele = ite.next();
                 if ("component-scan".equals(ele.getName())) {
                     String basePackage = ele.attributeValue("base-package");
-                    PackageResourceLoader loader = new PackageResourceLoader();
-                    loader.getResources(basePackage);
+//                    PackageResourceLoader loader = new PackageResourceLoader();
+//                    loader.getResources(basePackage);
+                    ClassPathBeanDefinitionScanner scanner =
+                            new ClassPathBeanDefinitionScanner(beanDefRegistry);
+                    scanner.doScan(basePackage);
+
                 } else if ("bean".equals(ele.getName())) {
                     String id = ele.attributeValue(ID_ATTRIBUTE);
                     String beanClassName = ele.attributeValue(CLASS_ATTRIBUTE);

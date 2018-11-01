@@ -25,6 +25,10 @@ public class GenericBeanDefinition implements BeanDefinition {
         this.scope = scope;
     }
 
+    public GenericBeanDefinition() {
+
+    }
+
 
     @Override
     public String getBeanClassName() {

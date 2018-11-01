@@ -1,7 +1,7 @@
 package mini.spring.core.type.classreading;
 
 
-import mini.spring.core.annotation.AnnotationAttributes;
+import mini.spring.context.annotation.AnnotationAttributes;
 import org.springframework.asm.AnnotationVisitor;
 import org.springframework.asm.SpringAsmInfo;
 
