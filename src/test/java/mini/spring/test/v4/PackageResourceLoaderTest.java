@@ -2,7 +2,6 @@ package mini.spring.test.v4;
 
 import mini.spring.core.io.Resource;
 import mini.spring.core.io.support.PackageResourceLoader;
-import mini.spring.core.type.classreading.SimpleMetadataReader;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -22,6 +21,12 @@ public class PackageResourceLoaderTest {
         Resource[] resources = loader.getResources("mini.spring.test.entity");
 
         Assert.assertEquals(3, resources.length);
+
+//        for (Resource res : resources) {
+//            SimpleMetadataReader metaReader = new SimpleMetadataReader(res);
+//            AnnotationMetadata amd = metaReader.getAnnotationMetadata();
+//            amd.hasAnnotation()
+//        }
 
     }
 

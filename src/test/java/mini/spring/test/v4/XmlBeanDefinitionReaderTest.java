@@ -21,13 +21,8 @@ public class XmlBeanDefinitionReaderTest {
         DefaultBeanFactory factory = new DefaultBeanFactory();
         XMLBeanDefinitionReader bdReader = new DefaultXMLBeanDefinitionReader(factory);
         bdReader.loadBeanDefinition(new ClassPathResource("spring-config-v4.xml"));
-        BeanDefinition bd = factory.getBeanDefinition("petStore");
 
-        Assert.assertNotNull(bd);
-        Assert.assertTrue(bd instanceof GenericBeanDefinition);
-
+        ClassPathBeanDefinitionScannerTest.test(factory);
 
     }
-
-
 }
