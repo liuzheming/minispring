@@ -1,20 +1,28 @@
 package mini.spring.test.v4;
 
+import mini.spring.beans.BeanDefinition;
 import mini.spring.beans.factory.support.DefaultBeanFactory;
+import mini.spring.context.annotation.AnnotationBeanDefinition;
 import mini.spring.context.annotation.ClassPathBeanDefinitionScanner;
-import mini.spring.core.io.Resource;
-import mini.spring.core.io.support.PackageResourceLoader;
-import mini.spring.core.type.AnnotationMetadata;
-import mini.spring.core.type.classreading.SimpleMetadataReader;
+import mini.spring.stereotype.Component;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Description:
+ * Description: 4、读取指定包路径下的所有class文件，并生成对应的BeanDefinition
  * <p>
- * Created by lzm on  2018-11-01 .
+ * Created by lzm on  2018-11-01.
  */
 public class ClassPathBeanDefinitionScannerTest {
 
+
+    /**
+     * 使用ClassPathBeanDefinitionScanner封装了:
+     * <p>
+     * (1) 读取package下多个class文件的功能---packageResourceLoader
+     * (2) 读取class文件的classMetadata、annotationMetadata的功能---MetadataReader
+     * (3) 根据class文件的Metadata生成对应BeanDefinition的功能
+     */
     @Test
     public void testBeanDefinition() throws Exception {
 
@@ -23,19 +31,31 @@ public class ClassPathBeanDefinitionScannerTest {
 
         ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(beanFactory);
         scanner.doScan(basePackage);
+        test(beanFactory);
 
-        PackageResourceLoader loader = new PackageResourceLoader();
-        Resource[] resources = loader.getResources("mini.spring.test.entity");
-//        XMLBeanDefinitionReader reader = new DefaultXMLBeanDefinitionReader(beanFactory);
-//        reader.loadBeanDefinition(new ClassPathResource("spring-config-v4.xml"));
+    }
 
 
-        for (Resource res : resources) {
-            SimpleMetadataReader metaReader = new SimpleMetadataReader(res);
-            AnnotationMetadata amd = metaReader.getAnnotationMetadata();
-//            amd.getAnnotationAttributes()
+    public static void test(DefaultBeanFactory beanFactory) {
+        {
+            BeanDefinition bd = beanFactory.getBeanDefinition("petStore");
+            Assert.assertTrue(bd instanceof AnnotationBeanDefinition);
+            AnnotationBeanDefinition abd = (AnnotationBeanDefinition) bd;
+            Assert.assertEquals("petStore",
+                    abd.getMetadata().getAnnotationAttributes(Component.class.getName()).getString("value"));
         }
-
+        {
+            BeanDefinition bd = beanFactory.getBeanDefinition("itemDao");
+            Assert.assertTrue(bd instanceof AnnotationBeanDefinition);
+            AnnotationBeanDefinition abd = (AnnotationBeanDefinition) bd;
+            Assert.assertNotNull(abd.getMetadata().getAnnotationAttributes(Component.class.getName()));
+        }
+        {
+            BeanDefinition bd = beanFactory.getBeanDefinition("accountDao");
+            Assert.assertTrue(bd instanceof AnnotationBeanDefinition);
+            AnnotationBeanDefinition abd = (AnnotationBeanDefinition) bd;
+            Assert.assertNotNull(abd.getMetadata().getAnnotationAttributes(Component.class.getName()));
+        }
     }
 
 }
