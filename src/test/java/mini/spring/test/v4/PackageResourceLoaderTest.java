@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Description:
+ * Description: 3、测试读取指定包路径下的所有class，转为Resource
  * <p>
  * Created by lzm on  2018-11-01 .
  */

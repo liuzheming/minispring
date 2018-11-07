@@ -11,15 +11,20 @@ import org.springframework.asm.ClassReader;
 import java.io.IOException;
 
 /**
- * Description: 1. 测试通过读取Class文件，来获取类的元数据的功能,包括class本身的信息和class被标注的annotation信息
+ * Description: 1. 读取读取单个Class文件，获取ClassMetadata、AnnotationMetadata信息
  * <p>
  * Created by lzm on  2018-10-30 .
  */
 public class ClassReaderTest {
 
 
+    /**
+     * 读取一个指定的class，生成对应的classReader
+     * 并使用visitor模式访问class文件的metadata
+     */
     @Test
     public void testReadClassMetaData() throws IOException {
+
 
         ClassPathResource resource = new ClassPathResource("mini/spring/test/entity/PetStore.class");
         ClassReader reader = new ClassReader(resource.getInputStream());
