@@ -26,9 +26,5 @@ public class XmlBeanDefinitionReaderTest {
 
         ClassPathBeanDefinitionScannerTest.test(factory);
 
-        Assert.assertNotNull(bd);
-        Assert.assertTrue(bd instanceof GenericBeanDefinition);
-
-        Assert.assertNotNull(factory.getBean("petStore"));
     }
 }
