@@ -31,12 +31,12 @@ public class ClassPathBeanDefinitionScannerTest {
 
         ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(beanFactory);
         scanner.doScan(basePackage);
-        test(beanFactory);
+        testGenerateBeanWithNoDependency(beanFactory);
 
     }
 
 
-    public static void test(DefaultBeanFactory beanFactory) {
+    public static void testGenerateBeanWithNoDependency(DefaultBeanFactory beanFactory) {
         {
             BeanDefinition bd = beanFactory.getBeanDefinition("petStore");
             Assert.assertTrue(bd instanceof AnnotationBeanDefinition);

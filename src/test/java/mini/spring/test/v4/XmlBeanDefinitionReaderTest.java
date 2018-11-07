@@ -24,7 +24,7 @@ public class XmlBeanDefinitionReaderTest {
         XMLBeanDefinitionReader bdReader = new DefaultXMLBeanDefinitionReader(factory);
         bdReader.loadBeanDefinition(new ClassPathResource("spring-config-v4.xml"));
 
-        ClassPathBeanDefinitionScannerTest.test(factory);
+        ClassPathBeanDefinitionScannerTest.testGenerateBeanWithNoDependency(factory);
 
     }
 }
