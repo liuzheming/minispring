@@ -1,7 +1,6 @@
 package mini.spring.test.v4;
 
 import mini.spring.beans.BeanDefinition;
-import mini.spring.beans.factory.BeanFactory;
 import mini.spring.beans.factory.support.DefaultBeanFactory;
 import mini.spring.context.annotation.AnnotationBeanDefinition;
 import mini.spring.context.annotation.ClassPathBeanDefinitionScanner;
@@ -12,7 +11,7 @@ import org.junit.Test;
 /**
  * Description: 4、读取指定包路径下的所有class文件，并生成对应的BeanDefinition
  * <p>
- * Created by lzm on  2018-11-01 .
+ * Created by lzm on  2018-11-01.
  */
 public class ClassPathBeanDefinitionScannerTest {
 
