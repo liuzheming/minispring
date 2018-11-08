@@ -38,4 +38,19 @@ public class DefaultBeanDefinition implements BeanDefinition {
     public boolean hasConstructorArg() {
         return false;
     }
+
+    @Override
+    public Class<?> resolveBeanClass(ClassLoader classLoader) throws ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public Class<?> getBeanClass() throws IllegalStateException {
+        return null;
+    }
+
+    @Override
+    public boolean hasBeanClass() {
+        return false;
+    }
 }

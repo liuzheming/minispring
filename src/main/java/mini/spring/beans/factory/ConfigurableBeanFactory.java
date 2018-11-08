@@ -1,6 +1,8 @@
 package mini.spring.beans.factory;
 
-public interface ConfigurableBeanFactory extends BeanFactory {
+import mini.spring.beans.factory.config.AutowireCapableBeanFactory;
+
+public interface ConfigurableBeanFactory extends AutowireCapableBeanFactory {
 
     void setBeanClassLoader(ClassLoader beanCLassLoader);
 
