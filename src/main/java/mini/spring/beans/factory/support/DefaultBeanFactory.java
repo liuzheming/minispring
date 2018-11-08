@@ -6,6 +6,7 @@ import mini.spring.beans.SimpleTypeConverter;
 import mini.spring.beans.TypeConverter;
 import mini.spring.beans.factory.BeanCreationException;
 import mini.spring.beans.factory.ConfigurableBeanFactory;
+import mini.spring.beans.factory.config.DependencyDescriptor;
 import mini.spring.util.ClassUtils;
 
 import java.beans.BeanInfo;
@@ -130,4 +131,31 @@ public class DefaultBeanFactory implements ConfigurableBeanFactory, BeanDefiniti
     }
 
 
+    @Override
+    public Object resolveDependency(DependencyDescriptor depDesc) {
+        Class<?> typeToMatch = depDesc.getDependencyType();
+        // 根据classType找到对应的beanDefinition
+        for (BeanDefinition beanDef : this.beanDefMap.values()) {
+            resolveBeanClass(beanDef);
+            if (!beanDef.hasBeanClass()) {
+                return null;
+            }
+            if (beanDef.getBeanClass().isAssignableFrom(typeToMatch)) {
+                return getBean(beanDef.getId());
+            }
+        }
+        return null;
+    }
+
+
+    private void resolveBeanClass(BeanDefinition bd) {
+        if (bd.hasBeanClass()) {
+            return;
+        }
+        try {
+            bd.resolveBeanClass(getBeanClassLoader());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("can't load class " + bd.getBeanClassName());
+        }
+    }
 }
