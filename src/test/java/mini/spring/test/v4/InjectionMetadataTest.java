@@ -16,11 +16,10 @@ import java.lang.reflect.Field;
 import java.util.LinkedList;
 
 /**
- * Description:
- * <p>          使用InjectionMetadata对象封装了向targetBean注入依赖的过程
- * <p>          InjectionElement内调用factory.resolveDependency()来生成依赖对象
- * <p>          采用InjectionMetadata来封装注入过程，有什么好处？是为了确保注入的灵活性嘛？
- * <p>          InjectionMetadata的工作方式用了什么设计模式？
+ * Description: 7、使用InjectionMetadata对象封装了向targetBean注入依赖的过程
+ * <p>             InjectionElement内调用factory.resolveDependency()来生成依赖对象
+ * <p>             采用InjectionMetadata来封装注入过程，有什么好处？是为了确保注入的灵活性嘛？
+ * <p>             InjectionMetadata的工作方式用了什么设计模式？
  * <p>
  * <p>
  * Created by lzm on  2018-11-08.
