@@ -44,13 +44,13 @@ public class InjectionMetadataTest {
 
         {
 
-            Field f = PetStore.class.getDeclaredField("accountDao");
+            Field f = clazz.getDeclaredField("accountDao");
             InjectionElement element = new AutowiredFieldElement(f, true, factory);
             elements.add(element);
         }
         {
 
-            Field f = PetStore.class.getDeclaredField("itemDao");
+            Field f = clazz.getDeclaredField("itemDao");
             InjectionElement element = new AutowiredFieldElement(f, true, factory);
             elements.add(element);
         }

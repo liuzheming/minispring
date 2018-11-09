@@ -18,7 +18,7 @@ public class InjectionMetadata {
         this.elements = elements;
     }
 
-    public List<InjectionElement> getInjectionElement() {
+    public List<InjectionElement> getInjectionElements() {
         return elements;
     }
 

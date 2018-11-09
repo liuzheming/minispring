@@ -1,12 +1,15 @@
 package mini.spring.test.entity;
 
+import mini.spring.beans.factory.annotation.Autowire;
 import mini.spring.stereotype.Component;
 
 @Component(value = "petStore")
 public class PetStore {
 
+    @Autowire
     private AccountDao accountDao;
 
+    @Autowire
     private ItemDao itemDao;
 
     private String owner;
