@@ -2,7 +2,7 @@ package mini.spring.core.io.support;
 
 
 import mini.spring.core.io.Resource;
-import mini.spring.utils.Assert;
+import mini.spring.util.Assert;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,6 +21,10 @@ public class FileSystemResource implements Resource {
     public FileSystemResource(String path) {
         Assert.notNull(path, "path can not be null!");
         this.file = new File(path);
+    }
+
+    public FileSystemResource(File file) {
+        this.file = file;
     }
 
     @Override

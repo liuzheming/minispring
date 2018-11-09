@@ -1,20 +1,37 @@
 package mini.spring.test.entity;
 
+import mini.spring.beans.factory.annotation.Autowire;
+import mini.spring.stereotype.Component;
+
+@Component(value = "petStore")
 public class PetStore {
 
+    @Autowire
     private AccountDao accountDao;
 
+    @Autowire
     private ItemDao itemDao;
 
     private String owner;
 
-    private Integer version;
+    private int version;
 
-    public Integer getVersion() {
+    public PetStore() {
+
+    }
+
+    public PetStore(AccountDao accountDao, ItemDao itemDao, String owner, int version) {
+        this.accountDao = accountDao;
+        this.itemDao = itemDao;
+        this.owner = owner;
+        this.version = version;
+    }
+
+    public int getVersion() {
         return version;
     }
 
-    public void setVersion(Integer version) {
+    public void setVersion(int version) {
         this.version = version;
     }
 

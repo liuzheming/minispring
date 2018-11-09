@@ -28,6 +28,7 @@ public class ApplicationTestV2 {
         Assert.assertTrue(petStore.getAccountDao() instanceof AccountDao);
         Assert.assertTrue(petStore.getItemDao() instanceof ItemDao);
         Assert.assertEquals("lzm", petStore.getOwner());
+        Assert.assertEquals(1, petStore.getVersion());
 
 
     }

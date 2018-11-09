@@ -1,7 +1,7 @@
 package mini.spring.core.io.support;
 
 import mini.spring.core.io.Resource;
-import mini.spring.utils.ClassUtils;
+import mini.spring.util.ClassUtils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

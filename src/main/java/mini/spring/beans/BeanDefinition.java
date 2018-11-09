@@ -18,4 +18,14 @@ public interface BeanDefinition {
 
     List<PropertyValue> getPropValues();
 
+    ConstructorArgument getConstructorArgument();
+
+    boolean hasConstructorArg();
+
+    Class<?> resolveBeanClass(ClassLoader classLoader) throws ClassNotFoundException;
+
+    Class<?> getBeanClass() throws IllegalStateException;
+
+    boolean hasBeanClass();
+
 }

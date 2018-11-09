@@ -1,6 +1,7 @@
 package mini.spring.beans.factory.support;
 
 import mini.spring.beans.BeanDefinition;
+import mini.spring.beans.ConstructorArgument;
 import mini.spring.beans.PropertyValue;
 
 import java.util.ArrayList;
@@ -14,12 +15,20 @@ public class GenericBeanDefinition implements BeanDefinition {
 
     private String scope;
 
-    private List<PropertyValue> propVals = new ArrayList<>();
+    private Class<?> beanClass;
+
+    private ConstructorArgument constructorArgument = new ConstructorArgument();
+
+    private List<PropertyValue> propValues = new ArrayList<>();
 
     public GenericBeanDefinition(String id, String beanClassName, String scope) {
         this.id = id;
         this.beanClassName = beanClassName;
         this.scope = scope;
+    }
+
+    public GenericBeanDefinition() {
+
     }
 
 
@@ -49,7 +58,42 @@ public class GenericBeanDefinition implements BeanDefinition {
     }
 
     @Override
-    public List<PropertyValue> getPropValues(){
-        return this.propVals;
+    public List<PropertyValue> getPropValues() {
+        return this.propValues;
+    }
+
+    @Override
+    public ConstructorArgument getConstructorArgument() {
+        return this.constructorArgument;
+    }
+
+    @Override
+    public boolean hasConstructorArg() {
+        return !this.constructorArgument.isEmpty();
+    }
+
+    @Override
+    public Class<?> resolveBeanClass(ClassLoader classLoader) throws ClassNotFoundException {
+        String className = getBeanClassName();
+        if (className == null) {
+            return null;
+        }
+        Class clazz = classLoader.loadClass(className);
+        this.beanClass = clazz;
+        return clazz;
+    }
+
+    @Override
+    public Class<?> getBeanClass() throws IllegalStateException {
+        if (this.beanClass == null) {
+            throw new IllegalStateException("Bean class name [" +
+                    this.getBeanClassName() + "] has not bean resolved into a actual Class");
+        }
+        return this.beanClass;
+    }
+
+    @Override
+    public boolean hasBeanClass() {
+        return beanClass != null;
     }
 }

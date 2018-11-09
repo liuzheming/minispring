@@ -5,8 +5,9 @@ import mini.spring.beans.PropertyValue;
 import mini.spring.beans.SimpleTypeConverter;
 import mini.spring.beans.TypeConverter;
 import mini.spring.beans.factory.BeanCreationException;
-import mini.spring.beans.factory.BeanFactory;
-import mini.spring.utils.ClassUtils;
+import mini.spring.beans.factory.ConfigurableBeanFactory;
+import mini.spring.beans.factory.config.DependencyDescriptor;
+import mini.spring.util.ClassUtils;
 
 import java.beans.BeanInfo;
 import java.beans.Introspector;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
+public class DefaultBeanFactory implements ConfigurableBeanFactory, BeanDefinitionRegistry {
 
 
     private final Map<String, BeanDefinition> beanDefMap = new ConcurrentHashMap<>();
@@ -60,13 +61,19 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
     }
 
     private Object instantiateBean(BeanDefinition bd) {
-        ClassLoader cl = this.getBeanClassLoader();
-        String beanClassName = bd.getBeanClassName();
-        try {
-            Class clazz = cl.loadClass(beanClassName);
-            return clazz.newInstance();
-        } catch (Exception e) {
-            throw new BeanCreationException("create bean for " + beanClassName + " failed", e);
+
+        if (bd.hasConstructorArg()) {
+            ConstructorResolver resolver = new ConstructorResolver(this);
+            return resolver.autowireConstructor(bd);
+        } else {
+            ClassLoader cl = this.getBeanClassLoader();
+            String beanClassName = bd.getBeanClassName();
+            try {
+                Class clazz = cl.loadClass(beanClassName);
+                return clazz.newInstance();
+            } catch (Exception e) {
+                throw new BeanCreationException("create bean for " + beanClassName + " failed", e);
+            }
         }
     }
 
@@ -109,17 +116,46 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
 //    }
 
     @Override
-    public void registerBeanDefinition(BeanDefinition beanDef) {
-        this.beanDefMap.put(beanDef.getId(), beanDef);
+    public void registerBeanDefinition(String beanId, BeanDefinition beanDef) {
+        this.beanDefMap.put(beanId, beanDef);
     }
 
+    @Override
     public void setBeanClassLoader(ClassLoader beanClassLoader) {
         this.beanClassLoader = beanClassLoader;
     }
 
-    private ClassLoader getBeanClassLoader() {
+    @Override
+    public ClassLoader getBeanClassLoader() {
         return (this.beanClassLoader != null ? this.beanClassLoader : ClassUtils.getDefaultClassLoader());
     }
 
 
+    @Override
+    public Object resolveDependency(DependencyDescriptor depDesc) {
+        Class<?> typeToMatch = depDesc.getDependencyType();
+        // 根据classType找到对应的beanDefinition
+        for (BeanDefinition beanDef : this.beanDefMap.values()) {
+            resolveBeanClass(beanDef);
+            if (!beanDef.hasBeanClass()) {
+                return null;
+            }
+            if (beanDef.getBeanClass().isAssignableFrom(typeToMatch)) {
+                return getBean(beanDef.getId());
+            }
+        }
+        return null;
+    }
+
+
+    private void resolveBeanClass(BeanDefinition bd) {
+        if (bd.hasBeanClass()) {
+            return;
+        }
+        try {
+            bd.resolveBeanClass(getBeanClassLoader());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("can't load class " + bd.getBeanClassName());
+        }
+    }
 }
