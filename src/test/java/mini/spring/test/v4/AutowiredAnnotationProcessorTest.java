@@ -11,13 +11,22 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Description:
+ * Description: 8、测试向一个Bean实例中注入它所依赖的对象
+ * <p>             AutowiredAnnotationProcessor封装了：
+ * <p>             读取targetBean所需的依赖项，并生成相应的InjectionMetadata向targetBean的过程
+ * <p>
  * <p>
  * Created by lzm on  2018-11-09.
  */
 public class AutowiredAnnotationProcessorTest {
 
 
+    /**
+     * 用匿名内部类隐藏了factory已经测试过的细节
+     * <p>
+     * 创建AutowiredAnnotationProcessor，它依赖于factory
+     * 然后根据targetBean的class生成对应的InjectionMetadata
+     */
     @Test
     public void testAutowireProcessor() {
 

@@ -1,9 +1,10 @@
 package mini.spring.test.entity;
 
+
 import mini.spring.beans.factory.annotation.Autowire;
 import mini.spring.stereotype.Component;
 
-@Component(value = "petStore")
+@Component
 public class PetStore {
 
     @Autowire
@@ -15,17 +16,6 @@ public class PetStore {
     private String owner;
 
     private int version;
-
-    public PetStore() {
-
-    }
-
-    public PetStore(AccountDao accountDao, ItemDao itemDao, String owner, int version) {
-        this.accountDao = accountDao;
-        this.itemDao = itemDao;
-        this.owner = owner;
-        this.version = version;
-    }
 
     public int getVersion() {
         return version;

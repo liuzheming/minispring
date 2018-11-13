@@ -1,6 +1,9 @@
 package mini.spring.beans.factory.annotation;
 
+import mini.spring.beans.BeansException;
+import mini.spring.beans.factory.BeanCreationException;
 import mini.spring.beans.factory.config.AutowireCapableBeanFactory;
+import mini.spring.beans.factory.config.InstantiationAwareBeanPostProcessor;
 import mini.spring.core.annotation.AnnotationUtils;
 import mini.spring.util.ReflectionUtils;
 
@@ -19,7 +22,7 @@ import java.util.Set;
  * <p>
  * Created by lzm on  2018-11-09.
  */
-public class AutowiredAnnotationProcessor {
+public class AutowiredAnnotationProcessor implements InstantiationAwareBeanPostProcessor {
 
     private AutowireCapableBeanFactory beanFactory;
 
@@ -100,5 +103,35 @@ public class AutowiredAnnotationProcessor {
 
     public void setBeanFactory(AutowireCapableBeanFactory factory) {
         this.beanFactory = factory;
+    }
+
+    @Override
+    public Object beforeInstantiation(Class<?> beanClass, String beanName) throws BeansException {
+        return null;
+    }
+
+    @Override
+    public boolean afterInstantiation(Object bean, String beanName) throws BeansException {
+        return false;
+    }
+
+    @Override
+    public void postProcessPropertyValues(Object bean, String beanName) throws BeansException {
+        InjectionMetadata metadata = buildAutowiringMetadata(bean.getClass());
+        try {
+            metadata.inject(bean);
+        } catch (Exception e) {
+            throw new BeanCreationException(beanName, "Injection of autowired dependency failed ", e);
+        }
+    }
+
+    @Override
+    public Object beforeInitialization(Object bean, String beanName) throws BeansException {
+        return null;
+    }
+
+    @Override
+    public Object afterInitialization(Object bean, String beanName) throws BeansException {
+        return null;
     }
 }

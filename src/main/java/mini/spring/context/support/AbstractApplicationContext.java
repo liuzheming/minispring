@@ -1,5 +1,7 @@
 package mini.spring.context.support;
 
+import mini.spring.beans.factory.ConfigurableBeanFactory;
+import mini.spring.beans.factory.annotation.AutowiredAnnotationProcessor;
 import mini.spring.beans.factory.support.DefaultBeanFactory;
 import mini.spring.beans.factory.xml.XMLBeanDefinitionReader;
 import mini.spring.beans.factory.xml.support.DefaultXMLBeanDefinitionReader;
@@ -23,6 +25,7 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
         XMLBeanDefinitionReader reader = new DefaultXMLBeanDefinitionReader(beanFactory);
         reader.loadBeanDefinition(getResource(path));
         beanFactory.setBeanClassLoader(this.getBeanClassLoader());
+        registerBeanPostProcessor(beanFactory);
     }
 
     @Override
@@ -39,4 +42,12 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
     public void setBeanClassLoader(ClassLoader beanClassLoader) {
         this.beanClassLoader = beanClassLoader;
     }
+
+    private void registerBeanPostProcessor(ConfigurableBeanFactory bf) {
+        AutowiredAnnotationProcessor processor = new AutowiredAnnotationProcessor();
+        processor.setBeanFactory(bf);
+        bf.addBeanPostProcessor(processor);
+    }
+
+
 }

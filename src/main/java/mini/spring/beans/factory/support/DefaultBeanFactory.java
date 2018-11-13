@@ -6,13 +6,16 @@ import mini.spring.beans.SimpleTypeConverter;
 import mini.spring.beans.TypeConverter;
 import mini.spring.beans.factory.BeanCreationException;
 import mini.spring.beans.factory.ConfigurableBeanFactory;
+import mini.spring.beans.factory.config.BeanPostProcessor;
 import mini.spring.beans.factory.config.DependencyDescriptor;
+import mini.spring.beans.factory.config.InstantiationAwareBeanPostProcessor;
 import mini.spring.util.ClassUtils;
 
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,9 +26,21 @@ public class DefaultBeanFactory implements ConfigurableBeanFactory, BeanDefiniti
     private final Map<String, BeanDefinition> beanDefMap = new ConcurrentHashMap<>();
     private final Map<String, Object> beanMap = new ConcurrentHashMap<>();
     private ClassLoader beanClassLoader;
+    private List<BeanPostProcessor> beanPostProcessors = new ArrayList<>();
 
     public DefaultBeanFactory() {
     }
+
+    @Override
+    public void addBeanPostProcessor(BeanPostProcessor processor) {
+        this.beanPostProcessors.add(processor);
+    }
+
+    @Override
+    public List<BeanPostProcessor> getBeanPostProcessors() {
+        return this.beanPostProcessors;
+    }
+
 
     @Override
     public BeanDefinition getBeanDefinition(String beanName) {
@@ -78,6 +93,15 @@ public class DefaultBeanFactory implements ConfigurableBeanFactory, BeanDefiniti
     }
 
     private void populateBean(BeanDefinition bd, Object bean) {
+
+
+        for (BeanPostProcessor processor : this.beanPostProcessors) {
+            if (processor instanceof InstantiationAwareBeanPostProcessor) {
+                ((InstantiationAwareBeanPostProcessor) processor).postProcessPropertyValues(bean, bd.getId());
+            }
+        }
+
+
         List<PropertyValue> pvs = bd.getPropValues();
         if (pvs == null || pvs.isEmpty()) {
             return;
@@ -131,6 +155,12 @@ public class DefaultBeanFactory implements ConfigurableBeanFactory, BeanDefiniti
     }
 
 
+    /**
+     * 根据依赖的的描述符，在factory内找到相应的Bean实例并返回
+     *
+     * @param depDesc 依赖的描述符
+     * @return 被依赖的对象
+     */
     @Override
     public Object resolveDependency(DependencyDescriptor depDesc) {
         Class<?> typeToMatch = depDesc.getDependencyType();
