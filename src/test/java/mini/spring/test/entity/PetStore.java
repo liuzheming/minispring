@@ -22,8 +22,8 @@ public class PetStore {
 
     private int version;
 
-    public void placeOrder() {
-        logger.info("order has bean place to [{}]", 1);
+    public void placeOrder(int order) {
+        logger.info("order has bean place to [{}]", order);
     }
 
 

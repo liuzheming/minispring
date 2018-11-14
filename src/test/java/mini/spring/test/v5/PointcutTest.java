@@ -15,6 +15,10 @@ import java.lang.reflect.Method;
  */
 public class PointcutTest {
 
+
+    /**
+     * 判断给定的class的给定方法,与expression的描述是否相匹配
+     */
     @Test
     public void testPointcut() throws Exception {
 
@@ -29,7 +33,7 @@ public class PointcutTest {
         {
             Class<?> targetClass = PetStore.class;
 
-            Method method = targetClass.getMethod("placeOrder");
+            Method method = targetClass.getMethod("placeOrder", int.class);
 
             Assert.assertNotNull(mm.matches(method));
 
