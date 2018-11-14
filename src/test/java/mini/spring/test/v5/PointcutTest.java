@@ -10,6 +10,8 @@ import java.lang.reflect.Method;
 
 /**
  * Description: 1、测试程序如何识别PointCut所描述的Join Point
+ * <p>              使用AspectJExpressionPointcut封装了AspectJ中的部分功能,
+ * <p>              来判断beanClass中的方法是否与expression相匹配
  * <p>
  * Created by lzm on 2018/11/14.
  */
