@@ -3,9 +3,14 @@ package mini.spring.test.entity;
 
 import mini.spring.beans.factory.annotation.Autowire;
 import mini.spring.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 @Component(value = "petStore")
 public class PetStore {
+
+    private Logger logger = LoggerFactory.getLogger(PetStore.class);
 
     @Autowire
     private AccountDao accountDao;
@@ -16,6 +21,11 @@ public class PetStore {
     private String owner;
 
     private int version;
+
+    public void placeOrder() {
+        logger.info("order has bean place to [{}]", 1);
+    }
+
 
     public int getVersion() {
         return version;

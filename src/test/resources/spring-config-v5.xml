@@ -3,7 +3,7 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/c"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
@@ -13,6 +13,8 @@
 
     <context:component-scan base-package="mini.spring.test.entity"/>
 
+
+    <aop:point-cut id="placeOrder" expression="execution(* mini.spring.test.entity.*.placeOrder(..))"/>
 
     <!--<bean id="petStore" class="mini.spring.test.entity.PetStore" scope="singleton">-->
 
