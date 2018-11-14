@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd"
+>
+
+
+    <context:component-scan base-package="mini.spring.test.entity"/>
+
+
+    <!--<bean id="petStore" class="mini.spring.test.entity.PetStore" scope="singleton">-->
+
+    <!--<constructor-arg ref="accountDao"/>-->
+    <!--<constructor-arg ref="itemDao"/>-->
+    <!--<constructor-arg value="lzm"/>-->
+    <!--<constructor-arg value="1"/>-->
+
+    <!--&lt;!&ndash;<property name="accountDao" ref="accountDao"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="itemDao" ref="itemDao"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="owner" value="lzm"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="version" value="1"/>&ndash;&gt;-->
+    <!--</bean>-->
+
+    <!--<bean id="accountDao" class="mini.spring.test.entity.AccountDao"/>-->
+    <!--<bean id="itemDao" class="mini.spring.test.entity.ItemDao"/>-->
+</beans>
+
