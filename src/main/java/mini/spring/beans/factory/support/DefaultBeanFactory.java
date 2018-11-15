@@ -6,6 +6,7 @@ import mini.spring.beans.SimpleTypeConverter;
 import mini.spring.beans.TypeConverter;
 import mini.spring.beans.factory.BeanCreationException;
 import mini.spring.beans.factory.ConfigurableBeanFactory;
+import mini.spring.beans.factory.NoSuchBeanDefinitionException;
 import mini.spring.beans.factory.config.BeanPostProcessor;
 import mini.spring.beans.factory.config.DependencyDescriptor;
 import mini.spring.beans.factory.config.InstantiationAwareBeanPostProcessor;
@@ -187,5 +188,15 @@ public class DefaultBeanFactory implements ConfigurableBeanFactory, BeanDefiniti
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("can't load class " + bd.getBeanClassName());
         }
+    }
+
+
+    public Class<?> getType(String name) throws NoSuchBeanDefinitionException {
+        BeanDefinition bd = this.getBeanDefinition(name);
+        if (bd == null) {
+            throw new NoSuchBeanDefinitionException(name);
+        }
+        resolveBeanClass(bd);
+        return bd.getBeanClass();
     }
 }
