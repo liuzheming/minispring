@@ -1,7 +1,8 @@
 package mini.spring.test.tx;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Description:
@@ -10,7 +11,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TransactionMgr {
 
-    private Logger logger = LoggerFactory.getLogger(TransactionMgr.class);
+    private Logger logger = LogManager.getLogger(TransactionMgr.class);
 
     public void start() {
         logger.info("start tx");

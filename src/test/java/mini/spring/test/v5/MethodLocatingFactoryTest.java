@@ -10,6 +10,7 @@ import mini.spring.test.tx.TransactionMgr;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -21,7 +22,7 @@ public class MethodLocatingFactoryTest {
 
 
     @Test
-    public void testGetMethod() throws NoSuchMethodException {
+    public void testGetMethod() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 
         DefaultBeanFactory beanFactory = new DefaultBeanFactory();
         XMLBeanDefinitionReader reader = new DefaultXMLBeanDefinitionReader(beanFactory);
@@ -38,6 +39,7 @@ public class MethodLocatingFactoryTest {
 
             Assert.assertEquals(TransactionMgr.class, m.getDeclaringClass());
             Assert.assertEquals(TransactionMgr.class.getMethod("start"), m);
+            m.invoke(beanFactory.getBean("tx"));
         }
         {
             MethodLocatingFactory mlf = new MethodLocatingFactory();
