@@ -46,7 +46,7 @@ public class ReflectiveMethodInvocation implements MethodInvocation {
     public Object proceed() throws Throwable {
 
         if (currentInterceptor == interceptors.size() - 1) {
-            return invokeJointPoint();
+            return invokeJoinPoint();
         }
 
         currentInterceptor++;
@@ -56,7 +56,7 @@ public class ReflectiveMethodInvocation implements MethodInvocation {
         return interceptor.invoke(this);
     }
 
-    protected Object invokeJointPoint() throws Throwable {
+    protected Object invokeJoinPoint() throws Throwable {
         return this.targetMethod.invoke(targetObject, args);
     }
 
