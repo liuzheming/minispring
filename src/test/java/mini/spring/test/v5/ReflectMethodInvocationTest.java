@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class ReflectMethodInvocationTest {
 
-    List<MethodInterceptor> interceptors;
+    private List<MethodInterceptor> interceptors;
 
     @Before
     public void initThis() throws Throwable {
