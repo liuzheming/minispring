@@ -53,7 +53,6 @@ public class ReflectiveMethodInvocation implements MethodInvocation {
 
         MethodInterceptor interceptor = interceptors.get(currentInterceptor);
 
-
         return interceptor.invoke(this);
     }
 

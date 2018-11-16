@@ -26,6 +26,11 @@ public class PetStore {
         logger.info("order has bean place to [{}]", order);
     }
 
+    public void placeOrderError(int order) throws Exception {
+        logger.info("order has bean place to [{}]", order);
+        throw new RuntimeException();
+    }
+
 
     public int getVersion() {
         return version;
