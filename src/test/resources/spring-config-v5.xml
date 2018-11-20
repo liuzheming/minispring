@@ -3,18 +3,30 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/c"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd"
+       http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop "
 >
 
 
     <context:component-scan base-package="mini.spring.test.entity"/>
 
 
-    <aop:point-cut id="placeOrder" expression="execution(* mini.spring.test.entity.*.placeOrder(..))"/>
+    <bean id="tx" class="mini.spring.test.tx.TransactionMgr"/>
+
+    <aop:config>
+
+        <aop:aspect ref="tx"/>
+        <aop:point-cut id="placeOrder" expression="execution(* mini.spring.test.entity.*.placeOrder(..))"/>
+        <aop:before pointcut-ref="placeOrder" method="start"/>
+        <aop:after-returning pointcut-ref="placeOrder" method="commit"/>
+        <aop:after-throwing pointcut-ref="placeOrder" method="rollback"/>
+
+    </aop:config>
 
     <!--<bean id="petStore" class="mini.spring.test.entity.PetStore" scope="singleton">-->
 

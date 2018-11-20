@@ -1,6 +1,7 @@
 package mini.spring.context.support;
 
 import mini.spring.beans.factory.ConfigurableBeanFactory;
+import mini.spring.beans.factory.NoSuchBeanDefinitionException;
 import mini.spring.beans.factory.annotation.AutowiredAnnotationProcessor;
 import mini.spring.beans.factory.support.DefaultBeanFactory;
 import mini.spring.beans.factory.xml.XMLBeanDefinitionReader;
@@ -47,6 +48,10 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
         AutowiredAnnotationProcessor processor = new AutowiredAnnotationProcessor();
         processor.setBeanFactory(bf);
         bf.addBeanPostProcessor(processor);
+    }
+
+    public Class<?> getType(String name) throws NoSuchBeanDefinitionException {
+        return this.beanFactory.getType(name);
     }
 
 

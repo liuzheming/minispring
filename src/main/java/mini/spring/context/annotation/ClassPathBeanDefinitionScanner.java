@@ -4,15 +4,14 @@ import mini.spring.beans.BeanDefinition;
 import mini.spring.beans.factory.BeanDefinitionStoreException;
 import mini.spring.beans.factory.support.BeanDefinitionRegistry;
 import mini.spring.beans.factory.support.BeanNameGenerator;
-import mini.spring.beans.factory.support.DefaultBeanDefinition;
 import mini.spring.core.io.Resource;
 import mini.spring.core.io.support.PackageResourceLoader;
 import mini.spring.core.type.classreading.MetadataReader;
 import mini.spring.core.type.classreading.SimpleMetadataReader;
 import mini.spring.stereotype.Component;
 import mini.spring.util.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.LinkedHashSet;
@@ -25,7 +24,7 @@ import java.util.Set;
  */
 public class ClassPathBeanDefinitionScanner {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private Logger logger = LogManager.getLogger(getClass());
 
     private final BeanDefinitionRegistry registry;
 

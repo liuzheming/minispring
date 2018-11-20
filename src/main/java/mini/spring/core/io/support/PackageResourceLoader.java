@@ -3,8 +3,8 @@ package mini.spring.core.io.support;
 
 import mini.spring.core.io.Resource;
 import mini.spring.util.ClassUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +21,7 @@ import java.util.Set;
 public class PackageResourceLoader {
 
 
-    private static final Logger logger = LoggerFactory.getLogger(PackageResourceLoader.class);
+    private Logger logger = LogManager.getLogger(PackageResourceLoader.class);
 
 
     private final ClassLoader classLoader;

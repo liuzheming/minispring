@@ -37,7 +37,7 @@ public class PointcutTest {
 
             Method method = targetClass.getMethod("placeOrder", int.class);
 
-            Assert.assertNotNull(mm.matches(method));
+            Assert.assertTrue(mm.matches(method));
 
         }
 
@@ -46,7 +46,7 @@ public class PointcutTest {
 
             Method method = targetClass.getMethod("getAccountDao");
 
-            Assert.assertNotNull(mm.matches(method));
+            Assert.assertTrue(!mm.matches(method));
 
         }
 

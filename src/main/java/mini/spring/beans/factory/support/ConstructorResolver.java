@@ -6,8 +6,8 @@ import mini.spring.beans.SimpleTypeConverter;
 import mini.spring.beans.TypeConverter;
 import mini.spring.beans.factory.BeanCreationException;
 import mini.spring.beans.factory.ConfigurableBeanFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class ConstructorResolver {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LogManager.getLogger(this.getClass());
 
     private ConfigurableBeanFactory factory;
 

@@ -11,11 +11,12 @@ import mini.spring.beans.factory.support.GenericBeanDefinition;
 import mini.spring.beans.factory.xml.XMLBeanDefinitionReader;
 import mini.spring.context.annotation.ClassPathBeanDefinitionScanner;
 import mini.spring.core.io.Resource;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +28,7 @@ import java.util.Iterator;
  */
 public class DefaultXMLBeanDefinitionReader implements XMLBeanDefinitionReader {
 
-    private Logger logger = LoggerFactory.getLogger(DefaultXMLBeanDefinitionReader.class);
+    private Logger logger = LogManager.getLogger(DefaultXMLBeanDefinitionReader.class);
 
     private BeanDefinitionRegistry beanDefRegistry;
 
