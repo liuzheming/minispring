@@ -21,6 +21,7 @@ public class AopConfigSupport implements AopConfig {
 
     private List<Advice> advices = new ArrayList<>();
 
+
     private List<Class<?>> interfaces = new ArrayList<>();
 
     public AopConfigSupport() {
