@@ -16,7 +16,7 @@ public interface AopConfig {
 
     Class<?>[] getProxiedInterfaces();
 
-    boolean isInterfaceProxied();
+    boolean isInterfaceProxied(Class<?> intf);
 
     List<Advice> getAdvice();
 
