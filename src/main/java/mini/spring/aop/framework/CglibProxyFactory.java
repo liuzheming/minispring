@@ -108,7 +108,14 @@ public class CglibProxyFactory implements AopProxyFactory {
         // Callback targetDispatcher = new StaticDispatcher();
 
         Callback[] callbacks = new Callback[]{
-                aopInterceptor
+                aopInterceptor  // AOP_PROXY for normal advice
+                // targetInterceptor,       // INVOKE_TARGET invoke target without considering advice, if optimized
+                // new SerializableNoOp(),  // NO_OVERRIDE no override for this method mapped to this
+                // targetDispatcher,        // DISPATCHER_TARGET
+                // this.adviceDispatcher,   // DISPATCHER_ADVICE
+                // new EqualsInterceptor(this.advised),
+                // new HashCodeInterceptor(this.advised)
+
         };
         return callbacks;
     }
