@@ -28,6 +28,11 @@ public class AopConfigSupport implements AopConfig {
 
     }
 
+
+    public void addAdvice(Advice advice) {
+        this.advices.add(advice);
+    }
+
     @Override
     public Class<?> getTargetClass() {
         return targetObject.getClass();
@@ -68,7 +73,7 @@ public class AopConfigSupport implements AopConfig {
     }
 
     @Override
-    public List<Advice> getAdvice() {
+    public List<Advice> getAdvices() {
         return advices;
     }
 

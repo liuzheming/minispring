@@ -8,6 +8,8 @@ import java.util.List;
 public interface AopConfig {
 
 
+    void addAdvice(Advice advice);
+
     Class<?> getTargetClass();
 
     Object getTargetObject();
@@ -18,7 +20,7 @@ public interface AopConfig {
 
     boolean isInterfaceProxied(Class<?> intf);
 
-    List<Advice> getAdvice();
+    List<Advice> getAdvices();
 
     /**
      * 给定一个方法,找到其对应的Advice
