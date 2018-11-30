@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
 
 /**
  * Description:
- * <p>  动态代理分有两种形式, 1、在编译器处理,如AspectJ
+ * <p>  动态代理分有两种形式，  1、在编译器处理,如AspectJ
  * <p>                      2、在运行时处理,如Spring,需要注意的是,虽然spring依赖于AspectJ的部分代码,
  * <p>                         但是spring是在运行时进行加强的
  * Created by lzm on  2018-11-14.

@@ -10,7 +10,7 @@ import mini.spring.test.tx.TransactionMgr;
 import org.junit.Test;
 
 /**
- * Description: 测试CglibFactory--依赖于AspectConfig--生成对应的proxy
+ * Description: 5、测试CglibFactory--依赖于AspectConfig--生成对应的proxy
  * <p>
  * Created by lzm on  2018-11-21.
  */

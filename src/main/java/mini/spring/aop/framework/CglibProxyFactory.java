@@ -23,12 +23,12 @@ import java.util.List;
 public class CglibProxyFactory implements AopProxyFactory {
 
     private static final int AOP_PROXY = 0;
-    private static final int INVOKE_TARGET = 1;
-    private static final int NO_OVERRIDE = 2;
-    private static final int DISPATCH_TARGET = 3;
-    private static final int DISPATCH_ADVISED = 4;
-    private static final int INVOKE_EQUALS = 5;
-    private static final int INVOKE_HASHCODE = 6;
+//    private static final int INVOKE_TARGET = 1;
+//    private static final int NO_OVERRIDE = 2;
+//    private static final int DISPATCH_TARGET = 3;
+//    private static final int DISPATCH_ADVISED = 4;
+//    private static final int INVOKE_EQUALS = 5;
+//    private static final int INVOKE_HASHCODE = 6;
 
 
     protected static final Logger logger = LogManager.getLogger(CglibProxyFactory.class);
@@ -72,18 +72,18 @@ public class CglibProxyFactory implements AopProxyFactory {
             enhancer.setNamingPolicy(SpringNamingPolicy.INSTANCE);
             enhancer.setInterceptDuringConstruction(false);
 
-            Callback[] callbacks = getCallbacks(rootClass);
+            Callback[] callbacks = getCallbacks();
             Class<?>[] types = new Class<?>[callbacks.length];
 
             for (int i = 0; i < types.length; i++) {
                 types[i] = callbacks[i].getClass();
             }
 
+            enhancer.setCallbackFilter(new ProxyCallbackFilter(this.config));
             enhancer.setCallbacks(callbacks);
             enhancer.setCallbackTypes(types);
-            Object proxy = enhancer.create();
 
-            return proxy;
+            return enhancer.create();
         } catch (CodeGenerationException e) {
             throw new AopConfigException("Could not generate CGLIB subclass of class " +
                     "[" + this.config.getTargetClass() + "] :" +
@@ -100,14 +100,15 @@ public class CglibProxyFactory implements AopProxyFactory {
     }
 
 
-    private Callback[] getCallbacks(Class<?> rootClass) throws Exception {
+    private Callback[] getCallbacks() {
         Callback aopInterceptor = new DynamicAdvisedInterceptor(this.config);
 
         // Callback targetInterceptor = new StaticUnadvisedExposedInterceptor(this.advised.getTargetObject());
 
         // Callback targetDispatcher = new StaticDispatcher();
 
-        Callback[] callbacks = new Callback[]{
+        Callback[] callbacks;
+        callbacks = new Callback[]{
                 aopInterceptor  // AOP_PROXY for normal advice
                 // targetInterceptor,       // INVOKE_TARGET invoke target without considering advice, if optimized
                 // new SerializableNoOp(),  // NO_OVERRIDE no override for this method mapped to this
@@ -149,8 +150,7 @@ public class CglibProxyFactory implements AopProxyFactory {
                 retVal = methodProxy.invoke(target, args);
             } else {
                 List<org.aopalliance.intercept.MethodInterceptor> interceptors =
-                        new ArrayList<>();
-                interceptors.addAll(chains);
+                        new ArrayList<>(chains);
 
                 // We need to create a method invocation...
                 retVal = new ReflectiveMethodInvocation(target, method, args, interceptors).proceed();
