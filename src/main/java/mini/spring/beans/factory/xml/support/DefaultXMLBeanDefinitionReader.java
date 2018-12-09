@@ -42,6 +42,10 @@ public class DefaultXMLBeanDefinitionReader implements XMLBeanDefinitionReader {
     private static final String NAME_ATTRIBUTE = "name";
     private static final String CONSTRUCTOR_ARG_ELEMENT = "constructor-arg";
     private static final String TYPE_ATTRIBUTE = "type";
+    public static final String BEANS_NAMESPACE_URI = "http://www.springframework.org/schema/beans";
+    public static final String CONTEXT_NAMESPACE_URI = "http://www.springframework.org/schema/context";
+    public static final String AOP_NAMESPACE_URI = "http://www.springframework.org/schema/aop";
+    private static final String BASE_PACKAGE_ATTRIBUTE = "base-package";
 
 
     public DefaultXMLBeanDefinitionReader(BeanFactory beanDefRegistry) {
@@ -58,6 +62,8 @@ public class DefaultXMLBeanDefinitionReader implements XMLBeanDefinitionReader {
             Iterator<Element> ite = doc.getRootElement().elementIterator();
             while (ite.hasNext()) { // 循环读出<bean>标签
                 Element ele = ite.next();
+                String namespaceUri = ele.getNamespaceURI();
+
                 if ("component-scan".equals(ele.getName())) {
                     String basePackage = ele.attributeValue("base-package");
 //                    PackageResourceLoader loader = new PackageResourceLoader();
@@ -88,6 +94,7 @@ public class DefaultXMLBeanDefinitionReader implements XMLBeanDefinitionReader {
             }
         }
     }
+
 
     @Override
     public void registerBeanDefinition(String beanId, BeanDefinition beanDefinition) {

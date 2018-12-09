@@ -1,5 +1,6 @@
 package mini.spring.test.v5;
 
+import mini.spring.aop.config.AspectInstanceFactory;
 import mini.spring.beans.factory.BeanFactory;
 import mini.spring.beans.factory.support.BeanDefinitionRegistry;
 import mini.spring.beans.factory.support.DefaultBeanFactory;
@@ -30,9 +31,9 @@ public abstract class AbstractTestV5 {
         return TransactionMgr.class.getMethod(methodName);
     }
 
-//    AspectInstanceFactory getAspectInstanceFactory(String targetBeanName) {
-//        AspectInstanceFactory aiFactory = new AspectInstanceFactory();
-
-
-//    }
+    AspectInstanceFactory getAspectInstanceFactory(String targetBeanName) {
+        AspectInstanceFactory aiFactory = new AspectInstanceFactory();
+        aiFactory.setAspectBeanName(targetBeanName);
+        return aiFactory;
+    }
 }

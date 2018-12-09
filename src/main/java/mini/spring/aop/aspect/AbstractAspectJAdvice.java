@@ -2,6 +2,7 @@ package mini.spring.aop.aspect;
 
 import mini.spring.aop.Advice;
 import mini.spring.aop.Pointcut;
+import mini.spring.aop.config.AspectInstanceFactory;
 
 import java.lang.reflect.Method;
 
@@ -14,19 +15,21 @@ public abstract class AbstractAspectJAdvice implements Advice {
 
     private Method adviceMethod;
 
-    private Object adviceObject;
+    private AspectInstanceFactory aspectInstanceFactory;
 
     private AspectJExpressionPointcut pointcut;
 
 
-    public AbstractAspectJAdvice(Method adviceMethod, Object adviceObject, AspectJExpressionPointcut pointcut) {
+    public AbstractAspectJAdvice(Method adviceMethod,
+                                 AspectInstanceFactory aspectInstanceFactory,
+                                 AspectJExpressionPointcut pointcut) {
         this.adviceMethod = adviceMethod;
-        this.adviceObject = adviceObject;
+        this.aspectInstanceFactory = aspectInstanceFactory;
         this.pointcut = pointcut;
     }
 
     public void invokeAdviceMethod() throws Throwable {
-        adviceMethod.invoke(adviceObject);
+        adviceMethod.invoke(aspectInstanceFactory.getAspectInstance());
     }
 
     @Override
