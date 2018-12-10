@@ -29,6 +29,10 @@ public class ConstructorArgument {
         this.argumentValues.add(valueHolder);
     }
 
+    public void addArgumentValue(Object obj) {
+        this.addArgumentValue(new ValueHolder(obj));
+    }
+
     public int size() {
         return this.argumentValues.size();
     }

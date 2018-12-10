@@ -28,4 +28,8 @@ public interface BeanDefinition {
 
     boolean hasBeanClass();
 
+    String getScope();
+
+    void setScope(String scope);
+
 }

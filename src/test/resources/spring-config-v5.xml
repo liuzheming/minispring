@@ -19,12 +19,12 @@
     <bean id="tx" class="mini.spring.test.tx.TransactionMgr"/>
 
     <aop:config>
-
-        <aop:aspect ref="tx"/>
-        <aop:point-cut id="placeOrder" expression="execution(* mini.spring.test.entity.*.placeOrder(..))"/>
-        <aop:before pointcut-ref="placeOrder" method="start"/>
-        <aop:after-returning pointcut-ref="placeOrder" method="commit"/>
-        <aop:after-throwing pointcut-ref="placeOrder" method="rollback"/>
+        <aop:aspect ref="tx">
+            <aop:pointcut id="placeOrder" expression="execution(* mini.spring.test.entity.*.placeOrder(..))"/>
+            <aop:before pointcut-ref="placeOrder" method="start"/>
+            <aop:after-returning pointcut-ref="placeOrder" method="commit"/>
+            <aop:after-throwing pointcut-ref="placeOrder" method="rollback"/>
+        </aop:aspect>
 
     </aop:config>
 
