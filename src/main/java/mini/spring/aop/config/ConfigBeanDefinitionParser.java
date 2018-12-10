@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Description: 负责读取xml文件的Aop相关信息，并生成对应的BeanDefinition
+ * Description: 负责读取xml文件内Aop标签的相关信息，并生成对应的BeanDefinition
  * <p>
  * Created by lzm on  2018-12-10.
  */
