@@ -2,6 +2,7 @@ package mini.spring.aop.config;
 
 import mini.spring.beans.BeanUtils;
 import mini.spring.beans.factory.BeanFactory;
+import mini.spring.beans.factory.FactoryBean;
 import mini.spring.beans.factory.NoSuchBeanDefinitionException;
 import mini.spring.util.StringUtils;
 
@@ -12,7 +13,7 @@ import java.lang.reflect.Method;
  * <p>
  * Created by lzm on  2018-11-15.
  */
-public class MethodLocatingFactory {
+public class MethodLocatingFactory implements FactoryBean<Method> {
 
     private String targetBeanName;
 
@@ -28,8 +29,14 @@ public class MethodLocatingFactory {
         this.methodName = methodName;
     }
 
+    @Override
     public Method getObject() {
         return method;
+    }
+
+    @Override
+    public Class<Method> getObjectType() {
+        return Method.class;
     }
 
     public void setBeanFactory(BeanFactory factory) {

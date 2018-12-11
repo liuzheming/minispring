@@ -143,6 +143,7 @@ public class ConfigBeanDefinitionParser {
 
         ConstructorArgument cav = adviceDefinition.getConstructorArgument();
         cav.addArgumentValue(methodDef);
+        cav.addArgumentValue(aspectFactoryDef);
 
         Object pointcut = parsePointcutProperty(adviceElement);
         if (pointcut instanceof BeanDefinition) {
@@ -154,7 +155,6 @@ public class ConfigBeanDefinitionParser {
             cav.addArgumentValue(pointcutRef);
             beanRefs.add(pointcutRef);
         }
-        cav.addArgumentValue(aspectFactoryDef);
 
         return adviceDefinition;
     }

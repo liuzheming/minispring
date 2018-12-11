@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class DefaultBeanFactory implements ConfigurableBeanFactory, BeanDefinitionRegistry {
+public class DefaultBeanFactory extends AbstractBeanFactory implements ConfigurableBeanFactory, BeanDefinitionRegistry {
 
 
     private final Map<String, BeanDefinition> beanDefMap = new ConcurrentHashMap<>();
@@ -70,7 +70,7 @@ public class DefaultBeanFactory implements ConfigurableBeanFactory, BeanDefiniti
     }
 
 
-    private Object createBean(BeanDefinition bd) {
+    protected Object createBean(BeanDefinition bd) {
         Object bean = instantiateBean(bd);
         populateBean(bd, bean);
         return bean;
