@@ -16,7 +16,7 @@ import org.junit.Test;
 
 /**
  * Description: 5、测试CglibFactory--依赖于AspectConfig--生成对应的proxy
- * <p>              BeanDefinitionReader可以读取xml文件内aop标签的内容，并生成对应的BeanDefinition
+ * <p>          6、BeanDefinitionReader可以读取xml文件内aop标签的内容，并生成对应的BeanDefinition
  * <p>
  * Created by lzm on  2018-11-21.
  */
@@ -67,6 +67,8 @@ public class CglibAopProxyTest extends AbstractTestV5 {
 
         proxy.placeOrder(1);
 
+        PetStore petStore = (PetStore) beanFactory.getBean("petStore");
+        petStore.placeOrder(1);
     }
 
 }

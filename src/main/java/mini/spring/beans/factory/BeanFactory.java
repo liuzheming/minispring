@@ -1,5 +1,7 @@
 package mini.spring.beans.factory;
 
+import java.util.List;
+
 public interface BeanFactory {
 
 
@@ -9,4 +11,5 @@ public interface BeanFactory {
 
     Class<?> getType(String name) throws NoSuchBeanDefinitionException;
 
+    List<Object> getBeansByType(Class<?> clz);
 }

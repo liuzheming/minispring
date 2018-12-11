@@ -7,7 +7,7 @@ import mini.spring.util.StringUtils;
  * <p>
  * Created by lzm on  2018-11-15.
  */
-public class NoSuchBeanDefinitionException extends Exception {
+public class NoSuchBeanDefinitionException extends RuntimeException {
 
     private String beanName;
 

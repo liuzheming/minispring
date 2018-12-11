@@ -61,7 +61,7 @@ public class ConfigBeanDefinitionParser {
 			}*/
 
             if (ASPECT.equals(child.getName())) {
-                parseAspect(ele, registry);
+                parseAspect(child, registry);
             }
         }
     }
@@ -128,7 +128,7 @@ public class ConfigBeanDefinitionParser {
 
     private boolean isAdviceNode(Element node) {
         String name = node.getName();
-        return POINTCUT.equals(name) || AFTER.equals(name) || AFTER_THROWING_ELEMENT.equals(name)
+        return BEFORE.equals(name) || AFTER.equals(name) || AFTER_THROWING_ELEMENT.equals(name)
                 || AFTER_RETURNING_ELEMENT.equals(name) || AROUND.equals(name);
     }
 

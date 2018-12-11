@@ -10,6 +10,8 @@ import mini.spring.context.ApplicationContext;
 import mini.spring.core.io.Resource;
 import mini.spring.util.ClassUtils;
 
+import java.util.List;
+
 /**
  * Description:
  * <p>
@@ -54,5 +56,8 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
         return this.beanFactory.getType(name);
     }
 
+    public List<Object> getBeansByType(Class<?> cls) {
+        return this.beanFactory.getBeansByType(cls);
+    }
 
 }

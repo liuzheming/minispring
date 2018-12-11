@@ -199,4 +199,30 @@ public class DefaultBeanFactory implements ConfigurableBeanFactory, BeanDefiniti
         resolveBeanClass(bd);
         return bd.getBeanClass();
     }
+
+
+    public List<Object> getBeansByType(Class<?> cls) {
+        List<String> ids = getBeanIdsByType(cls);
+        List<Object> beans = new ArrayList<>();
+        for (String id : ids) {
+            beans.add(getBean(id));
+        }
+        return beans;
+    }
+
+    private List<String> getBeanIdsByType(Class<?> cls) throws NoSuchBeanDefinitionException {
+        List<String> ids = new ArrayList<>();
+        // 这个循环是自己第一次写出来的代码，
+//        for (BeanDefinition bd : this.beanDefMap.values()) {
+//            if (cls.isAssignableFrom(bd.getBeanClass())) {
+//                ids.add(bd.getId());
+//            }
+//        }
+        for (String name : this.beanDefMap.keySet()) {
+            if (cls.isAssignableFrom(this.getType(name))) {
+                ids.add(name);
+            }
+        }
+        return ids;
+    }
 }
