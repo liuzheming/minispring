@@ -46,7 +46,7 @@ public class BeanDefinitionValueResolver {
             Object innerBean = this.beanFactory.createBean(innerBd);
             if (innerBean instanceof FactoryBean) {
                 try {
-                    return ((FactoryBean) innerBd).getObject();
+                    return ((FactoryBean) innerBean).getObject();
                 } catch (Exception e) {
                     throw new BeanCreationException(innerBeanName, "FactoryBean threw a exception on object creation", e);
                 }
