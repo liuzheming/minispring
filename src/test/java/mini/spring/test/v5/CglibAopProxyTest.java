@@ -1,5 +1,6 @@
 package mini.spring.test.v5;
 
+import mini.spring.aop.aspect.AspectJAfterReturningAdvice;
 import mini.spring.aop.aspect.AspectJBeforeAdvice;
 import mini.spring.aop.aspect.AspectJExpressionPointcut;
 import mini.spring.aop.config.AspectInstanceFactory;
@@ -9,11 +10,14 @@ import mini.spring.aop.framework.CglibProxyFactory;
 import mini.spring.beans.factory.BeanFactory;
 import mini.spring.test.entity.PetStore;
 import mini.spring.test.tx.TransactionMgr;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
  * Description: 5、测试CglibFactory--依赖于AspectConfig--生成对应的proxy
+ * <p>              BeanDefinitionReader可以读取xml文件内aop标签的内容，并生成对应的BeanDefinition
+ * <p>              这里的BeanDefinition工作机制是什么样的呢？和一般的BeanDefinition肯定有所不同吧。
  * <p>
  * Created by lzm on  2018-11-21.
  */
@@ -33,12 +37,14 @@ public class CglibAopProxyTest extends AbstractTestV5 {
         TransactionMgr adviceObj = new TransactionMgr();
 
         AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
-        String expression = "execution(* org.litespring.service.v5.*.placeOrder(..))";
+        String expression = "execution(* mini.spring.test.entity.*.placeOrder(..))";
         pointcut.setExpression(expression);
 
-        AspectInstanceFactory aspectInstanceFactory= this.getAspectInstanceFactory("tx");
+        AspectInstanceFactory aspectInstanceFactory = this.getAspectInstanceFactory("tx");
         aspectInstanceFactory.setBeanFactory(beanFactory);
 
+        Assert.assertNotNull(beanFactory.getBean("tx"));
+        Assert.assertNotNull(aspectInstanceFactory.getAspectInstance());
 
         AspectJBeforeAdvice beforeAdvice = new AspectJBeforeAdvice(
                 adviceObj.getClass().getMethod("start"),
@@ -46,7 +52,7 @@ public class CglibAopProxyTest extends AbstractTestV5 {
                 pointcut);
 
 
-        AspectJBeforeAdvice afterAdvice = new AspectJBeforeAdvice(
+        AspectJAfterReturningAdvice afterAdvice = new AspectJAfterReturningAdvice(
                 adviceObj.getClass().getMethod("commit"),
                 aspectInstanceFactory,
                 pointcut);
