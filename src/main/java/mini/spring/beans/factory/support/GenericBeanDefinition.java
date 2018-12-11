@@ -40,6 +40,9 @@ public class GenericBeanDefinition implements BeanDefinition {
         this.beanClassName = clazz.getName();
     }
 
+    public GenericBeanDefinition() {
+    }
+
     public String getScope() {
         return scope;
     }

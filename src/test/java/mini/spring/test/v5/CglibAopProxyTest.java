@@ -17,7 +17,6 @@ import org.junit.Test;
 /**
  * Description: 5、测试CglibFactory--依赖于AspectConfig--生成对应的proxy
  * <p>              BeanDefinitionReader可以读取xml文件内aop标签的内容，并生成对应的BeanDefinition
- * <p>              这里的BeanDefinition工作机制是什么样的呢？和一般的BeanDefinition肯定有所不同吧。
  * <p>
  * Created by lzm on  2018-11-21.
  */

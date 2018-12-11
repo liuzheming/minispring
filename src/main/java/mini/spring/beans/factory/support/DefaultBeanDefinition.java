@@ -53,4 +53,14 @@ public class DefaultBeanDefinition implements BeanDefinition {
     public boolean hasBeanClass() {
         return false;
     }
+
+    @Override
+    public String getScope() {
+        return null;
+    }
+
+    @Override
+    public void setScope(String scope) {
+
+    }
 }
