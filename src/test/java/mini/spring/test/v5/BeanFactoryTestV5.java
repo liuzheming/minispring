@@ -13,7 +13,7 @@ import org.junit.Test;
 import java.util.List;
 
 /**
- * Description: 7、测试是否已将Advice对象注册到BeanFactory
+ * Description: 7、测试：生成Advice等AOP相关的对象并注册到BeanFactory
  * <p>
  * Created by lzm on  2018-12-11.
  */

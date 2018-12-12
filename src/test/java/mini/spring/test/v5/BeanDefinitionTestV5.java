@@ -6,7 +6,6 @@ import mini.spring.aop.config.MethodLocatingFactory;
 import mini.spring.beans.BeanDefinition;
 import mini.spring.beans.ConstructorArgument;
 import mini.spring.beans.PropertyValue;
-import mini.spring.beans.factory.BeanFactory;
 import mini.spring.beans.factory.config.RuntimeBeanReference;
 import mini.spring.beans.factory.support.DefaultBeanFactory;
 import mini.spring.test.tx.TransactionMgr;
@@ -16,7 +15,9 @@ import org.junit.Test;
 import java.util.List;
 
 /**
- * Description:
+ * Description: 6、测试BeanDefinitionReader读取xml文件内aop标签的内容
+ * <p>                  ---Advice、Pointcut和他们所依赖的一些Bean---的注册信息并生成BeanDefinition
+ * <p>
  * <p>
  * Created by lzm on  2018-12-12.
  */
