@@ -1,9 +1,6 @@
 package mini.spring.beans.factory.support;
 
-import mini.spring.beans.BeanDefinition;
-import mini.spring.beans.PropertyValue;
-import mini.spring.beans.SimpleTypeConverter;
-import mini.spring.beans.TypeConverter;
+import mini.spring.beans.*;
 import mini.spring.beans.factory.BeanCreationException;
 import mini.spring.beans.factory.BeanFactoryAware;
 import mini.spring.beans.factory.ConfigurableBeanFactory;
@@ -141,7 +138,22 @@ public class DefaultBeanFactory extends AbstractBeanFactory implements Configura
 
     private Object initializeBean(BeanDefinition bd, Object bean) {
         invokeAutowireMethod(bean);
+        if (!bd.isSynthetic()) {
+            return applyBeanPostProcessorsAfterInitialization(bean, bd.getId());
+        }
         return bean;
+    }
+
+    private Object applyBeanPostProcessorsAfterInitialization(Object existingBean, String beanName) throws
+            BeansException {
+        Object result = existingBean;
+        for (BeanPostProcessor processor : this.getBeanPostProcessors()) {
+            result = processor.afterInitialization(result, beanName);
+            if (result == null) {
+                return result;
+            }
+        }
+        return result;
     }
 
 

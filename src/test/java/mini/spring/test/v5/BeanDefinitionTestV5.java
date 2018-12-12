@@ -1,6 +1,6 @@
 package mini.spring.test.v5;
 
-import mini.spring.aop.aspect.AspectJBeforeAdvice;
+import mini.spring.aop.aspectj.AspectJBeforeAdvice;
 import mini.spring.aop.config.AspectInstanceFactory;
 import mini.spring.aop.config.MethodLocatingFactory;
 import mini.spring.beans.BeanDefinition;

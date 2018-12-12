@@ -1,11 +1,16 @@
 package mini.spring.test.v5;
 
+import mini.spring.aop.config.MethodLocatingFactory;
 import mini.spring.beans.factory.support.DefaultBeanFactory;
 import mini.spring.beans.factory.xml.XMLBeanDefinitionReader;
 import mini.spring.beans.factory.xml.support.DefaultXMLBeanDefinitionReader;
+import mini.spring.context.ApplicationContext;
+import mini.spring.context.support.ClassPathXMLApplicationContext;
 import mini.spring.core.io.support.ClassPathResource;
+import mini.spring.test.entity.PetStore;
 import mini.spring.test.v4.XmlBeanDefinitionReaderTest;
 import org.junit.Assert;
+import org.junit.Test;
 
 import java.lang.reflect.Method;
 
@@ -19,22 +24,12 @@ import java.lang.reflect.Method;
 public class ApplicationCtxTestV5 {
 
 
+    @Test
     public void testGetMethod() throws Exception {
 
-//        DefaultBeanFactory factory = new DefaultBeanFactory();
-//        XMLBeanDefinitionReader reader = new DefaultXMLBeanDefinitionReader(factory);
-//        reader.loadBeanDefinition(new ClassPathResource("spring-config-v5.xml"));
-//
-//        MethodLocationFactory methodLocatingFactory = new MethodLocatingFactory();
-//        methodLocatingFactory.setTargetBeanName("tx");
-//        methodLocatingFactory.setMethodName("start");
-//        methodLocatingFactory.setBeanFactory(factory);
-//
-//        Method m = methodLocatingFactory.getObject();
-//
-//        Assert.assertTrue(TransactionManager.class.quials(m.getDeclaringClass()));
-//        Assert.assertTrue(m.equals(TransactionManager.class.getMethod("start")));
-
+        ApplicationContext ctx = new ClassPathXMLApplicationContext("spring-config-v5.xml");
+        PetStore ps = (PetStore) ctx.getBean("petStore");
+        ps.placeOrder(110);
     }
 
 

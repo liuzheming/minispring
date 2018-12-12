@@ -1,5 +1,6 @@
 package mini.spring.context.support;
 
+import mini.spring.aop.aspectj.AspectJAutoProxyCreator;
 import mini.spring.beans.factory.ConfigurableBeanFactory;
 import mini.spring.beans.factory.NoSuchBeanDefinitionException;
 import mini.spring.beans.factory.annotation.AutowiredAnnotationProcessor;
@@ -50,6 +51,10 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
         AutowiredAnnotationProcessor processor = new AutowiredAnnotationProcessor();
         processor.setBeanFactory(bf);
         bf.addBeanPostProcessor(processor);
+
+        AspectJAutoProxyCreator aspectProxyCreator = new AspectJAutoProxyCreator();
+        aspectProxyCreator.setConfigurableBeanFactory(bf);
+        bf.addBeanPostProcessor(aspectProxyCreator);
     }
 
     public Class<?> getType(String name) throws NoSuchBeanDefinitionException {

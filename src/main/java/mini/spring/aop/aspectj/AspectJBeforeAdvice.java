@@ -1,4 +1,4 @@
-package mini.spring.aop.aspect;
+package mini.spring.aop.aspectj;
 
 import mini.spring.aop.config.AspectInstanceFactory;
 import org.aopalliance.intercept.MethodInvocation;
@@ -10,18 +10,18 @@ import java.lang.reflect.Method;
  * <p>
  * Created by lzm on  2018-11-16.
  */
-public class AspectJAfterReturningAdvice extends AbstractAspectJAdvice {
+public class AspectJBeforeAdvice extends AbstractAspectJAdvice {
 
 
-    public AspectJAfterReturningAdvice(Method adviceMethod,
-                                       AspectInstanceFactory aspectInstanceFactory,
-                                       AspectJExpressionPointcut pointcut) {
+    public AspectJBeforeAdvice(Method adviceMethod,
+                               AspectInstanceFactory aspectInstanceFactory,
+                               AspectJExpressionPointcut pointcut) {
         super(adviceMethod, aspectInstanceFactory, pointcut);
     }
 
     public Object invoke(MethodInvocation mi) throws Throwable {
-        Object obj = mi.proceed();
         this.invokeAdviceMethod();
+        Object obj = mi.proceed();
         return obj;
     }
 }

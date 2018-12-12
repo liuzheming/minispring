@@ -1,7 +1,7 @@
 package mini.spring.test.v5;
 
 import mini.spring.aop.MethodMatcher;
-import mini.spring.aop.aspect.AspectJExpressionPointcut;
+import mini.spring.aop.aspectj.AspectJExpressionPointcut;
 import mini.spring.test.entity.PetStore;
 import org.junit.Assert;
 import org.junit.Test;

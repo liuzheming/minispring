@@ -1,4 +1,4 @@
-package mini.spring.aop.aspect;
+package mini.spring.aop.aspectj;
 
 import mini.spring.aop.MethodMatcher;
 import mini.spring.aop.Pointcut;

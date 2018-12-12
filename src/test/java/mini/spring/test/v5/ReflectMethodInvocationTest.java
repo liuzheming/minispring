@@ -1,8 +1,8 @@
 package mini.spring.test.v5;
 
-import mini.spring.aop.aspect.AspectJAfterReturningAdvice;
-import mini.spring.aop.aspect.AspectJAfterThrowingAdvice;
-import mini.spring.aop.aspect.AspectJBeforeAdvice;
+import mini.spring.aop.aspectj.AspectJAfterReturningAdvice;
+import mini.spring.aop.aspectj.AspectJAfterThrowingAdvice;
+import mini.spring.aop.aspectj.AspectJBeforeAdvice;
 import mini.spring.aop.config.AspectInstanceFactory;
 import mini.spring.aop.framework.ReflectiveMethodInvocation;
 import mini.spring.beans.factory.BeanFactory;

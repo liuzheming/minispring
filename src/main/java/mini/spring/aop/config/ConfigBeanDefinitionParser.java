@@ -1,9 +1,9 @@
 package mini.spring.aop.config;
 
-import mini.spring.aop.aspect.AspectJAfterReturningAdvice;
-import mini.spring.aop.aspect.AspectJAfterThrowingAdvice;
-import mini.spring.aop.aspect.AspectJBeforeAdvice;
-import mini.spring.aop.aspect.AspectJExpressionPointcut;
+import mini.spring.aop.aspectj.AspectJAfterReturningAdvice;
+import mini.spring.aop.aspectj.AspectJAfterThrowingAdvice;
+import mini.spring.aop.aspectj.AspectJBeforeAdvice;
+import mini.spring.aop.aspectj.AspectJExpressionPointcut;
 import mini.spring.beans.BeanDefinition;
 import mini.spring.beans.ConstructorArgument;
 import mini.spring.beans.PropertyValue;

@@ -1,4 +1,4 @@
-package mini.spring.aop.aspect;
+package mini.spring.aop.aspectj;
 
 import mini.spring.aop.config.AspectInstanceFactory;
 import org.aopalliance.intercept.MethodInvocation;
