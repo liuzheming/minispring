@@ -19,7 +19,7 @@ import java.lang.reflect.Method;
 public abstract class AbstractTestV5 {
 
 
-    BeanFactory getBeanFactory(String configFile) {
+    DefaultBeanFactory getBeanFactory(String configFile) {
         DefaultBeanFactory factory = new DefaultBeanFactory();
         XMLBeanDefinitionReader reader = new DefaultXMLBeanDefinitionReader(factory);
         reader.loadBeanDefinition(new ClassPathResource(configFile));

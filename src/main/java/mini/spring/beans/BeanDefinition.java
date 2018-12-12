@@ -32,4 +32,8 @@ public interface BeanDefinition {
 
     void setScope(String scope);
 
+    boolean isSynthetic();
+
+    void setSynthetic(boolean synthetic);
+
 }

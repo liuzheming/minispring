@@ -63,4 +63,14 @@ public class DefaultBeanDefinition implements BeanDefinition {
     public void setScope(String scope) {
 
     }
+
+    @Override
+    public boolean isSynthetic() {
+        return false;
+    }
+
+    @Override
+    public void setSynthetic(boolean synthetic) {
+
+    }
 }

@@ -116,10 +116,12 @@ public class GenericBeanDefinition implements BeanDefinition {
         return beanClass != null;
     }
 
+    @Override
     public boolean isSynthetic() {
         return isSynthetic;
     }
 
+    @Override
     public void setSynthetic(boolean synthetic) {
         isSynthetic = synthetic;
     }
