@@ -5,6 +5,7 @@ import mini.spring.beans.PropertyValue;
 import mini.spring.beans.SimpleTypeConverter;
 import mini.spring.beans.TypeConverter;
 import mini.spring.beans.factory.BeanCreationException;
+import mini.spring.beans.factory.BeanFactoryAware;
 import mini.spring.beans.factory.ConfigurableBeanFactory;
 import mini.spring.beans.factory.NoSuchBeanDefinitionException;
 import mini.spring.beans.factory.config.BeanPostProcessor;
@@ -73,6 +74,8 @@ public class DefaultBeanFactory extends AbstractBeanFactory implements Configura
     protected Object createBean(BeanDefinition bd) {
         Object bean = instantiateBean(bd);
         populateBean(bd, bean);
+        bean = initializeBean(bd, bean);
+
         return bean;
     }
 
@@ -133,6 +136,19 @@ public class DefaultBeanFactory extends AbstractBeanFactory implements Configura
             throw new BeanCreationException("Failed to obtain BeanInfo for class [" + bd.getBeanClassName() + "]", e);
         }
 
+    }
+
+
+    private Object initializeBean(BeanDefinition bd, Object bean) {
+        invokeAutowireMethod(bean);
+        return bean;
+    }
+
+
+    private void invokeAutowireMethod(Object bean) {
+        if (bean instanceof BeanFactoryAware) {
+            ((BeanFactoryAware) bean).setBeanFactory(this);
+        }
     }
 
 //    @Override

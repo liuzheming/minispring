@@ -51,7 +51,7 @@ public class BeanDefinitionValueResolver {
                     throw new BeanCreationException(innerBeanName, "FactoryBean threw a exception on object creation", e);
                 }
             } else {
-                return innerBd;
+                return innerBean;
             }
         } catch (BeansException ex) {
             throw new BeanCreationException(innerBeanName, "Can not create inner bean '" + innerBeanName + "' "
