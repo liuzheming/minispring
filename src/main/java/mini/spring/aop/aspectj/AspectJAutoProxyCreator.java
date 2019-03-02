@@ -6,6 +6,7 @@ import mini.spring.aop.Pointcut;
 import mini.spring.aop.framework.AopConfigSupport;
 import mini.spring.aop.framework.AopProxyFactory;
 import mini.spring.aop.framework.CglibProxyFactory;
+import mini.spring.aop.framework.JdkAopProxyFactory;
 import mini.spring.beans.BeansException;
 import mini.spring.beans.factory.ConfigurableBeanFactory;
 import mini.spring.beans.factory.config.BeanPostProcessor;
@@ -61,6 +62,8 @@ public class AspectJAutoProxyCreator implements BeanPostProcessor {
             proxyFactory = new CglibProxyFactory(config);
         } else {
             //TODO 需要实现JDK代理
+            proxyFactory = new JdkAopProxyFactory(config);
+
         }
         return proxyFactory.getProxy();
     }
